@@ -6,13 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.project.auto_aid.model.OnBoardScreen
 import com.project.auto_aid.model.SplashScreen
-import com.project.auto_aid.screens.ForgotPasswordScreen
-import com.project.auto_aid.screens.HomeScreen
-import com.project.auto_aid.screens.LoginScreen
-import com.project.auto_aid.screens.ResetPasswordScreen
-import com.project.auto_aid.screens.SignupScreen
-import com.project.auto_aid.screens.UserInfoScreen
-import com.project.auto_aid.screens.VerifyCodeScreen
+import com.project.auto_aid.screens.*
+import com.project.auto_aid.screens.garage.*
 import com.project.auto_aid.selectDocument.SelectDocumentScreen
 import com.project.auto_aid.settings.IDVerificationScreen
 import com.project.auto_aid.settings.SettingsScreen
@@ -25,6 +20,7 @@ fun AppNavigation(navController: NavHostController) {
         startDestination = Routes.SplashScreen.route
     ) {
 
+        // ================= SPLASH & ONBOARD =================
         composable(Routes.SplashScreen.route) {
             SplashScreen(navController)
         }
@@ -33,8 +29,13 @@ fun AppNavigation(navController: NavHostController) {
             OnBoardScreen(navController)
         }
 
+        // ================= AUTH =================
         composable(Routes.LoginScreen.route) {
             LoginScreen(navController)
+        }
+
+        composable(Routes.SignupScreen.route) {
+            SignupScreen(navController)
         }
 
         composable(Routes.ForgotPasswordScreen.route) {
@@ -49,11 +50,7 @@ fun AppNavigation(navController: NavHostController) {
             ResetPasswordScreen(navController)
         }
 
-
-        composable(Routes.SignupScreen.route) {
-            SignupScreen(navController)
-        }
-
+        // ================= MAIN =================
         composable(Routes.HomeScreen.route) {
             HomeScreen(navController)
         }
@@ -74,7 +71,21 @@ fun AppNavigation(navController: NavHostController) {
             SelectDocumentScreen(navController)
         }
 
+        // ================= GARAGE FLOW =================
+        composable(Routes.GarageScreen.route) {
+            GarageScreen(navController)
+        }
 
+        composable(Routes.GarageRequestScreen.route) {
+            GarageRequestScreen(navController)
+        }
 
+        composable(Routes.MechanicAssignedScreen.route) {
+            MechanicAssignedScreen(navController)
+        }
+
+        composable(Routes.HelpCompletedScreen.route) {
+            HelpCompletedScreen(navController)
+        }
     }
 }

@@ -15,8 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -83,7 +82,10 @@ val featuredServices = listOf(
 // HOME SCREEN
 // ======================================================
 @Composable
-fun HomeScreen(navController: NavHostController, userName: String = "User") {
+fun HomeScreen(
+    navController: NavHostController,
+    userName: String = "User"
+) {
 
     Scaffold(
         bottomBar = { AppBottomNavigationBar(navController) }
@@ -101,13 +103,124 @@ fun HomeScreen(navController: NavHostController, userName: String = "User") {
 
             TopHeader(userName)
             SearchAndProfileBar()
-            QuickAccessGrid()
+
+            // ✅ ONLY CHANGE: DIRECT NAVIGATION
+            QuickAccessGrid(navController)
+
             ReferralCard()
             FeaturesSection()
             RecentsSection()
 
-            Spacer(modifier = Modifier.height(3.dp))
+            Spacer(modifier = Modifier.height(12.dp))
         }
+    }
+}
+
+@Composable
+fun AppBottomNavigationBar(navController: NavHostController) {
+
+    NavigationBar(
+        containerColor = AppColors.primary
+    ) {
+
+        NavigationBarItem(
+            selected = true,
+            onClick = {
+                navController.navigate(Routes.HomeScreen.route) {
+                    launchSingleTop = true
+                }
+            },
+            icon = {
+                Icon(
+                    Icons.Default.Home,
+                    contentDescription = "Home",
+                    tint = Color.White
+                )
+            },
+            label = {
+                Text("Home", color = Color.White)
+            },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.Transparent
+            )
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                navController.navigate(Routes.SettingsScreen.route) {
+                    launchSingleTop = true
+                }
+            },
+            icon = {
+                Icon(
+                    Icons.Default.Settings,
+                    contentDescription = "Settings",
+                    tint = Color.White
+                )
+            },
+            label = {
+                Text("Settings", color = Color.White)
+            },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.Transparent
+            )
+        )
+    }
+}
+
+
+// ======================================================
+// QUICK ACCESS
+// ======================================================
+@Composable
+fun QuickAccessGrid(navController: NavHostController) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        quickAccessData.forEach { item ->
+            QuickAccessItemView(
+                item = item,
+                modifier = Modifier.weight(1f),
+                navController = navController
+            )
+        }
+    }
+}
+
+@Composable
+fun QuickAccessItemView(
+    item: QuickAccessItem,
+    modifier: Modifier,
+    navController: NavHostController
+) {
+    Column(
+        modifier = modifier
+            .padding(horizontal = 4.dp)
+            .clickable {
+                if (item.title == "Garage") {
+                    navController.navigate(Routes.GarageScreen.route)
+                }
+            },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Box(
+            modifier = Modifier
+                .size(72.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.White)
+                .border(1.dp, AppColors.secondary, RoundedCornerShape(12.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(item.icon, contentDescription = item.title, modifier = Modifier.size(36.dp))
+        }
+
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(item.title, fontSize = 13.sp, color = AppColors.textSecondary)
     }
 }
 
@@ -126,7 +239,7 @@ fun TopHeader(userName: String) {
 }
 
 // ======================================================
-// SEARCH BAR + PROFILE ICON (NO NAVIGATION HERE ANYMORE)
+// SEARCH BAR
 // ======================================================
 @Composable
 fun SearchAndProfileBar() {
@@ -142,7 +255,7 @@ fun SearchAndProfileBar() {
             value = "",
             onValueChange = {},
             placeholder = { Text("Search by Zip Code") },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
+            leadingIcon = { Icon(Icons.Default.Search, null) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
                 .weight(1f)
@@ -151,8 +264,7 @@ fun SearchAndProfileBar() {
                 focusedContainerColor = Color(0xFFEDEDED),
                 unfocusedContainerColor = Color(0xFFEDEDED),
                 focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-                cursorColor = AppColors.primary
+                unfocusedBorderColor = Color.Transparent
             )
         )
 
@@ -162,62 +274,11 @@ fun SearchAndProfileBar() {
             modifier = Modifier
                 .size(52.dp)
                 .clip(CircleShape)
-                .background(AppColors.primary)
-                .clickable { /* NO PROFILE NAV HERE ANYMORE */ },
+                .background(AppColors.primary),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                Icons.Default.Person,
-                contentDescription = "Profile",
-                tint = Color.White,
-                modifier = Modifier.size(28.dp)
-            )
+            Icon(Icons.Default.Person, null, tint = Color.White)
         }
-    }
-}
-
-// ======================================================
-// QUICK ACCESS
-// ======================================================
-@Composable
-fun QuickAccessGrid() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        quickAccessData.forEach { item ->
-            QuickAccessItemView(item, Modifier.weight(1f))
-        }
-    }
-}
-
-@Composable
-fun QuickAccessItemView(item: QuickAccessItem, modifier: Modifier) {
-    Column(
-        modifier = modifier
-            .padding(horizontal = 4.dp)
-            .clickable {},
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.White)
-                .border(1.dp, AppColors.secondary, RoundedCornerShape(12.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                item.icon,
-                contentDescription = item.title,
-                tint = AppColors.textPrimary,
-                modifier = Modifier.size(36.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(item.title, fontSize = 13.sp, color = AppColors.textSecondary)
     }
 }
 
@@ -249,7 +310,7 @@ fun ReferralCard() {
             ) {
                 Icon(
                     Icons.Default.EmojiEvents,
-                    contentDescription = "Trophy",
+                    contentDescription = null,
                     tint = AppColors.referralCardIcon,
                     modifier = Modifier.size(40.dp)
                 )
@@ -258,15 +319,14 @@ fun ReferralCard() {
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text("Refer A Friend And Get Reward!", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Text("Refer A Friend And Get Reward!", fontWeight = FontWeight.Bold)
                 Text("Invite a friend and win prizes.", fontSize = 12.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {},
-                    shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = AppColors.primary)
                 ) {
-                    Text("Refer", fontSize = 13.sp)
+                    Text("Refer")
                 }
             }
         }
@@ -274,7 +334,7 @@ fun ReferralCard() {
 }
 
 // ======================================================
-// FEATURES SECTION
+// FEATURES
 // ======================================================
 @Composable
 fun FeaturesSection() {
@@ -304,7 +364,6 @@ fun ServiceCard(item: ServiceItem) {
         modifier = Modifier
             .width(220.dp)
             .height(250.dp)
-            .clickable {}
     ) {
         Box(Modifier.fillMaxSize()) {
 
@@ -323,19 +382,14 @@ fun ServiceCard(item: ServiceItem) {
                     .padding(12.dp)
             ) {
                 Text(item.name, color = Color.White, fontWeight = FontWeight.Bold)
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.LocationOn, contentDescription = null,
-                        tint = Color.White, modifier = Modifier.size(16.dp))
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(item.location, color = Color.White, fontSize = 12.sp)
-                }
+                Text(item.location, color = Color.White, fontSize = 12.sp)
             }
         }
     }
 }
 
 // ======================================================
-// RECENTS SECTION
+// RECENTS
 // ======================================================
 @Composable
 fun RecentsSection() {
@@ -368,114 +422,28 @@ fun RecentsCard(label: String, color: Color) {
         modifier = Modifier
             .width(220.dp)
             .height(120.dp)
-            .clickable {}
     ) {
         Box(
             Modifier
                 .fillMaxSize()
-                .background(Color(0xFF1F2937))
+                .background(color)
         ) {
-            Box(Modifier.fillMaxSize().background(color.copy(alpha = 0.6f)))
-
             Text(
                 label,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(6.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                modifier = Modifier.padding(12.dp)
             )
         }
     }
 }
 
 // ======================================================
-// BOTTOM NAV BAR — NOW SETTINGS OPENS PROFILE SCREEN
-// ======================================================
-@Composable
-fun AppBottomNavigationBar(navController: NavHostController) {
-
-    val currentRoute = navController.currentBackStackEntry?.destination?.route
-
-    val navItems = listOf(
-        Triple(Icons.Default.Home, "Home", Routes.HomeScreen.route),
-        Triple(Icons.Default.FavoriteBorder, "Favourite", "favourite_screen"),
-        Triple(Icons.Default.ChatBubbleOutline, "Chat", "chat_screen"),
-        Triple(Icons.Default.Settings, "Settings", Routes.SettingsScreen.route)
-    )
-
-    // Animation target index
-    val selectedIndex = navItems.indexOfFirst { it.third == currentRoute }
-    val underlineOffset by animateDpAsState(
-        targetValue = (selectedIndex.takeIf { it >= 0 } ?: 0) * 115.dp,
-        label = "underline_offset"
-    )
-
-    Box {
-        NavigationBar(
-            containerColor = AppColors.primary,
-            tonalElevation = 4.dp
-        ) {
-
-            navItems.forEachIndexed { index, (icon, label, route) ->
-
-                val isSelected = currentRoute == route
-
-                NavigationBarItem(
-                    selected = isSelected,
-                    onClick = {
-                        navController.navigate(route) {
-                            launchSingleTop = true
-                            popUpTo(route) { inclusive = false }
-                        }
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = label,
-                            tint = Color.White
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = label,
-                            fontSize = 12.sp,
-                            color = Color.White
-                        )
-                    },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.White,
-                        selectedTextColor = Color.White,
-                        unselectedIconColor = Color(0xCCFFFFFF),
-                        unselectedTextColor = Color(0xCCFFFFFF),
-                        indicatorColor = Color.Transparent
-                    )
-                )
-            }
-        }
-
-        // 🔥 Animated underline — SLIDES SMOOTHLY
-        Box(
-            modifier = Modifier
-                .padding(bottom = 30.dp)
-                .height(3.dp)
-                .width(55.dp)
-                .offset(x = underlineOffset, y = 0.dp)
-                .background(Color.White, RoundedCornerShape(20))
-                .align(Alignment.BottomStart)
-        )
-    }
-}
-
-
-// ======================================================
 // PREVIEW
 // ======================================================
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun HomePreview() {
     HomeScreen(
         navController = rememberNavController(),
         userName = "Dave Kwagala"

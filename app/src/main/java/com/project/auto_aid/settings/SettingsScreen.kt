@@ -13,6 +13,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -20,90 +21,98 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.auto_aid.R
 import com.project.auto_aid.navigation.Routes
 import com.project.auto_aid.screens.AppBottomNavigationBar
+import kotlinx.coroutines.tasks.await
 
 // =======================================================
-// SETTINGS SCREEN – Loads Firebase User Data
+// SETTINGS SCREEN – ENTRY
 // =======================================================
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavHostController) {
+    LaunchedEffect(Unit) {
+        println("✅ SettingsScreen opened")
+    }
 
     val auth = FirebaseAuth.getInstance()
     val user = auth.currentUser
     val firestore = FirebaseFirestore.getInstance()
 
-    var firstName by remember { mutableStateOf("Loading") }
+    var firstName by remember { mutableStateOf<String?>(null) }
     var otherName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf(user?.email ?: "Not Available") }
 
-    // LOAD NAME FROM FIRESTORE
-    LaunchedEffect(user) {
-        user?.uid?.let { uid ->
-            firestore.collection("users").document(uid).get()
-                .addOnSuccessListener { doc ->
-                    firstName = doc.getString("firstName") ?: "User"
-                    otherName = doc.getString("otherName") ?: ""
-                }
+    LaunchedEffect(user?.uid) {
+        try {
+            val uid = user?.uid ?: return@LaunchedEffect
+            val doc = firestore.collection("users").document(uid).get().await()
+            firstName = doc.getString("firstName") ?: "User"
+            otherName = doc.getString("otherName") ?: ""
+        } catch (e: Exception) {
+            firstName = "User"
+            otherName = ""
         }
     }
 
     SettingsScreenUI(
-        fullName = "$firstName $otherName",
+        fullName = listOfNotNull(firstName, otherName).joinToString(" "),
         email = email,
         navController = navController,
+        loading = firstName == null,
         onLogoutClick = {
             auth.signOut()
-            navController.navigate(Routes.LoginScreen.route) { popUpTo(0) }
+            navController.navigate(Routes.LoginScreen.route) {
+                popUpTo(Routes.HomeScreen.route) { inclusive = true }
+            }
         }
     )
 }
 
 // =======================================================
-// SETTINGS UI — FULL WORKING VERSION
+// SETTINGS UI
 // =======================================================
 @Composable
 fun SettingsScreenUI(
     fullName: String,
     email: String,
-    navController: NavController? = null,
-    onLogoutClick: () -> Unit = {}
+    navController: NavHostController,
+    loading: Boolean,
+    onLogoutClick: () -> Unit
 ) {
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF2F6FA))
-    ) {
+    Scaffold(
+        bottomBar = { AppBottomNavigationBar(navController) }
+    ) { paddingValues ->
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 90.dp)
+                .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
+                .background(Color(0xFFF2F6FA))
                 .padding(16.dp)
         ) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // ---------------- PROFILE CARD ----------------
+            // PROFILE CARD
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { navController?.navigate(Routes.UserInfoScreen.route) },
+                    .alpha(if (loading) 0.6f else 1f)
+                    .clickable(enabled = !loading) {
+                        navController.navigate(Routes.UserInfoScreen.route)
+                    },
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(Color.White),
                 elevation = CardDefaults.cardElevation(8.dp)
             ) {
+
                 Row(
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .fillMaxWidth(),
+                    modifier = Modifier.padding(20.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -113,15 +122,20 @@ fun SettingsScreenUI(
                         Image(
                             painter = painterResource(R.drawable.logo1),
                             contentDescription = "Profile",
-                            modifier = Modifier
-                                .size(75.dp)
-                                .clip(CircleShape)
+                            modifier = Modifier.size(75.dp).clip(CircleShape)
                         )
 
                         Spacer(modifier = Modifier.width(15.dp))
 
                         Column {
-                            Text(fullName, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                            if (loading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(22.dp),
+                                    strokeWidth = 2.dp
+                                )
+                            } else {
+                                Text(fullName, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                            }
                             Text(email, fontSize = 16.sp, color = Color.Gray)
                         }
                     }
@@ -132,72 +146,39 @@ fun SettingsScreenUI(
 
             Spacer(modifier = Modifier.height(25.dp))
 
-            // ---------------- MENU CARD ----------------
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(Color.White),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-
+            // MENU
+            Card(shape = RoundedCornerShape(16.dp)) {
                 Column(modifier = Modifier.padding(10.dp)) {
-
                     MenuItem("ID Verification", R.drawable.id) {
-                        navController?.navigate(Routes.IDVerificationScreen.route)
+                        navController.navigate(Routes.IDVerificationScreen.route)
                     }
-
                     MenuItem("Communications", R.drawable.communication)
-
                     MenuItem("Payment Methods", R.drawable.payment)
-
                     MenuItem("Wallet Settings", R.drawable.wallet)
-
                     MenuItem("Contact Us", R.drawable.contact)
-
                     MenuItem("About", R.drawable.about)
                 }
             }
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-            // ---------------- LOGOUT BUTTON ----------------
+            // LOGOUT
             Button(
                 onClick = onLogoutClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(55.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0A9AD8),
-                    contentColor = Color.White
-                )
+                modifier = Modifier.fillMaxWidth().height(55.dp),
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Text("Logout", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-            }
-        }
-
-        // ---------------- BOTTOM NAV BAR ----------------
-        navController?.let { controller ->
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-            ) {
-                AppBottomNavigationBar(navController = controller as NavHostController)
             }
         }
     }
 }
 
 // =======================================================
-// MENU ITEM WITH "VERIFY" BADGE FOR ID VERIFICATION
+// MENU ITEM
 // =======================================================
 @Composable
-fun MenuItem(
-    title: String,
-    icon: Int,
-    onClick: () -> Unit = {}
-) {
+fun MenuItem(title: String, icon: Int, onClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -205,46 +186,29 @@ fun MenuItem(
             .padding(vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
-        Image(
-            painter = painterResource(id = icon),
-            contentDescription = title,
-            modifier = Modifier.size(26.dp)
-        )
-
+        Image(painterResource(icon), null, modifier = Modifier.size(26.dp))
         Spacer(modifier = Modifier.width(20.dp))
-
-        Text(
-            text = title,
-            fontSize = 18.sp,
-            modifier = Modifier.weight(1f)
-        )
-
-        // Only for ID Verification
+        Text(title, fontSize = 18.sp, modifier = Modifier.weight(1f))
         if (title == "ID Verification") {
-            Text(
-                text = "Verify",
-                fontSize = 16.sp,
-                color = Color(0xFF0A9AD8),
-                fontWeight = FontWeight.SemiBold
-            )
+            Text("Verify", color = Color(0xFF0A9AD8), fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.width(10.dp))
         }
-
         Text(">", fontSize = 22.sp, color = Color.Gray)
     }
-
-    HorizontalDivider(color = Color(0xFFE0E0E0))
+    HorizontalDivider()
 }
 
 // =======================================================
-// PREVIEW ONLY
+// PREVIEW
 // =======================================================
 @Preview(showBackground = true)
 @Composable
 fun SettingsPreview() {
     SettingsScreenUI(
         fullName = "Dave Kwagala",
-        email = "dave@gmail.com"
+        email = "dave@gmail.com",
+        navController = rememberNavController(),
+        loading = false,
+        onLogoutClick = {}
     )
 }

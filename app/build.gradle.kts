@@ -49,70 +49,51 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.splashscreen)
 
-    // This is the line that helps fix the red underline in themes.xml
-    implementation(libs.material3)
-    implementation("com.google.android.material:material:1.11.0")
+    // Material 3
+    implementation(libs.androidx.material3)
+    implementation(libs.material)
+    implementation(libs.androidx.material.icons.extended)
 
 
     // Jetpack Compose (using BOM - Bill of Materials)
-    // The BOM ensures all the following Compose libraries have compatible versions.
+    implementation(platform(libs.androidx.compose.bom))
 
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.foundation)
-    implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.navigation.compose)
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-
-
-    // CORRECTED: Only one declaration of material3, letting the BOM control the version.
-    implementation(platform("androidx.compose:compose-bom:2024.10.01"))
-
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
-
-    // Firebase (using BOM)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.auth)
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
-    implementation(platform("com.google.firebase:firebase-auth-ktx:23.2.1"))
-    implementation("androidx.compose.material3:material3:1.2.1")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material3:material3-window-size-class")
-    implementation ("com.google.firebase:firebase-storage-ktx:21.0.1")
-
-
-    implementation("com.google.android.gms:play-services-auth:21.0.1")
-    implementation("com.google.firebase:firebase-auth-ktx")
-
-    implementation("com.google.firebase:firebase-firestore:26.0.2")
-    implementation(libs.firebase.ai)
     implementation(libs.androidx.ui.text)
-    implementation(libs.androidx.compose.material3.material3)
-    implementation(libs.androidx.camera.core)
-    implementation(libs.espresso.core)
-    implementation("androidx.compose.material3:material3:<latest-version>")
-    implementation("androidx.compose.material:material-icons-extended:<matching-version>")
-    implementation(libs.androidx.compilercommon)
-    implementation(libs.firebase.storage)
-    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation(libs.androidx.runtime)
     implementation(libs.foundation)
     implementation(libs.androidx.animation.core)
     implementation(libs.runtime)
     implementation(libs.androidx.compose.foundation.foundation)
 
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
 
+    // Firebase (using BOM)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.ai)
+    
+    // Identity & Credentials
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.play.services.auth)
+
+    // Other Dependencies
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.10.01")) // BOM for test dependencies too
+    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
     // Debug

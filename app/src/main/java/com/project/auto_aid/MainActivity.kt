@@ -1,5 +1,3 @@
-package com.project.auto_aid
-
 import AutoAidTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,13 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
 import com.project.auto_aid.navigation.AppNavigation
 
-
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✅ Initialize Firebase
         FirebaseApp.initializeApp(this)
 
         setContent {
@@ -30,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // ✅ App starts from SplashScreen via AppNavigation
+                    // ✅ USE THIS ONLY
                     AppNavigation(navController = navController)
                 }
             }
