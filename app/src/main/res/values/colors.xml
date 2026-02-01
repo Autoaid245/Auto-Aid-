@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md_blue_500">#2196F3</color>
+    <color name="md_blue_700">#1976D2</color>
+    <color name="md_white_1000">#FAF8FF</color>
+    <color name="md_black_1000">#000000</color>
+</resources>
+
