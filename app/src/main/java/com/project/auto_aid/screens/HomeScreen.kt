@@ -201,10 +201,14 @@ fun QuickAccessItemView(
         modifier = modifier
             .padding(horizontal = 4.dp)
             .clickable {
-                if (item.title == "Garage") {
-                    navController.navigate(Routes.GarageScreen.route)
+                when (item.title) {
+                    "Garage" -> navController.navigate(Routes.GarageScreen.route)
+                    "Towing Track" -> navController.navigate(Routes.TowingScreen.route)
+                    "Fuel Delivery" -> navController.navigate(Routes.FuelScreen.route)
+                    "Ambulance" -> navController.navigate(Routes.AmbulanceScreen.route)
                 }
             },
+
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -216,13 +220,18 @@ fun QuickAccessItemView(
                 .border(1.dp, AppColors.secondary, RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ) {
-            Icon(item.icon, contentDescription = item.title, modifier = Modifier.size(36.dp))
+            Icon(
+                item.icon,
+                contentDescription = item.title,
+                modifier = Modifier.size(36.dp)
+            )
         }
 
         Spacer(modifier = Modifier.height(6.dp))
         Text(item.title, fontSize = 13.sp, color = AppColors.textSecondary)
     }
 }
+
 
 // ======================================================
 // HEADER

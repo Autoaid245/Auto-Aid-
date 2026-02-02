@@ -1,3 +1,5 @@
+package com.project.auto_aid
+
 import AutoAidTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,14 +21,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AutoAidTheme {
-
                 val navController = rememberNavController()
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // ✅ USE THIS ONLY
                     AppNavigation(navController = navController)
                 }
             }

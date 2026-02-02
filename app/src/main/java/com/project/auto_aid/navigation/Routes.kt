@@ -31,4 +31,22 @@ sealed class Routes(val route: String) {
 
     // ✅ Help completed
     object HelpCompletedScreen : Routes("help_completed")
+
+    // ================= 🚨 TOWING FLOW =================
+    object TowingScreen : Routes("towing")
+    object TowingRequestScreen : Routes("towing_request")
+    object TowingHistoryScreen : Routes("towing_history")
+    object TowingActiveScreen : Routes("towing_active")
+
+    // ================= ⛽ FUEL FLOW =================
+    object FuelScreen : Routes("fuel")
+    object FuelRequestScreen : Routes("fuel_request")
+    object FuelActiveScreen : Routes("fuel_active")
+    object FuelHistoryScreen : Routes("fuel_history")
+
+    // ================= 🚑 AMBULANCE =================
+    object AmbulanceScreen : Routes("ambulance")
+    object AmbulanceRequestScreen : Routes("ambulance_request")
+    object AmbulanceStatusScreen : Routes("ambulance_status")
+    object AmbulanceHistoryScreen : Routes("ambulance_history")
 }
