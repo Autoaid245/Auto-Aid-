@@ -71,7 +71,7 @@ fun SplashScreen(navController: NavController) {
 
             // LOGO ICON
             Image(
-                painter = painterResource(id = R.drawable.logo1),
+                painter = painterResource(id = R.drawable.logo01),
                 contentDescription = "Auto Aid Logo",
                 modifier = Modifier
                     .size(150.dp)
