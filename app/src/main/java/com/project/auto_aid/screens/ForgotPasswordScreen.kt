@@ -153,11 +153,11 @@ fun ForgotPasswordScreen(navController: NavController) {
                 navController.navigateUp()
             }
         ) {
-            Text("←", fontSize = 28.sp)
+            Text("", fontSize = 28.sp)
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = "Back to Login",
-                fontSize = 15.sp,
+                fontSize = 20.sp,
                 color = Color.Black
             )
         }

@@ -25,6 +25,7 @@ drawable id2
 drawable identification_card_6449294
 drawable images
 drawable instagram
+drawable logo01
 drawable logo1
 drawable logo10
 drawable logo11

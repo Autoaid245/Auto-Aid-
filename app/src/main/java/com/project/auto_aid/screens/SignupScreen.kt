@@ -139,9 +139,7 @@ fun SignupScreen(navController: NavController) {
                 RoleOption("Provider", selectedRole == "SERVICE_PROVIDER") {
                     selectedRole = "SERVICE_PROVIDER"
                 }
-                RoleOption("Admin", selectedRole == "ADMIN") {
-                    selectedRole = "ADMIN"
-                }
+
             }
 
             Spacer(modifier = Modifier.height(0.dp))

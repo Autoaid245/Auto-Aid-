@@ -1,374 +1,378 @@
 [
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo12.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo12.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo17.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo17.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-hdpi_logo20.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-hdpi/logo20.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/xml_backup_rules.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/xml/backup_rules.xml"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo8.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo8.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_passport.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/passport.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_id.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/id.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo10.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo10.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_stabex_1.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/stabex_1.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo12.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo12.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-ldpi_logo11.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-ldpi/logo11.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo13.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo13.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_shell_1.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/shell_1.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo7.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo7.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-hdpi_arro2.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-hdpi/arro2.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-hdpi_logo2.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-hdpi/logo2.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo16.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo16.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo10.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo10.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_no_see.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/no_see.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_gazz_1.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/gazz_1.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_payment.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/payment.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_instagram.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/instagram.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_shell_2.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/shell_2.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_instagram.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/instagram.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_gmail.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/gmail.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_gmail.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/gmail.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-anydpi/ic_launcher_round.xml"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logout.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logout.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_gram.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/gram.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_rubis_1.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/rubis_1.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-anydpi/ic_launcher.xml"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_well_serviced_vehicles.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/well_serviced_vehicles.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-hdpi_home.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-hdpi/home.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo1.jpeg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo1.jpeg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_well_serviced_vehicles.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/well_serviced_vehicles.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_passport.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/passport.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_hass_1.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/hass_1.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_communication.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/communication.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_about.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/about.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_ticktok.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/ticktok.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_instagram.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/instagram.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-hdpi_home.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-hdpi/home.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo15.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo15.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_images.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/images.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_contact.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/contact.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo14.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo14.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_ticktok.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/ticktok.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-hdpi_logo14.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-hdpi/logo14.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo11.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo11.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_gram.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/gram.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_total_2.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/total_2.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_home.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/home.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo6.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo6.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo14.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo14.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_see.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/see.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_hass_1.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/hass_1.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_wallet.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/wallet.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo15.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo15.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_total_2.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/total_2.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_contact.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/contact.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_flag.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/flag.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xxhdpi_logo1.jpeg.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xxhdpi/logo1.jpeg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_stabex_2.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/stabex_2.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-hdpi_logo2.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-hdpi/logo2.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_fuel.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/fuel.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo13.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo13.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_id2.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/id2.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_ticktok.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/ticktok.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo20.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo20.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo20.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo20.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_fb.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/fb.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo8.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo8.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo18.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo18.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo18.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo18.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-ldpi_logo11.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-ldpi/logo11.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_stabex_2.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/stabex_2.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_gmail.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/gmail.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_stabex_1.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/stabex_1.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xxhdpi_logo1.jpeg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xxhdpi/logo1.jpeg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_card.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/card.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_images.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/images.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_arrow.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/arrow.png"
+        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo01.png.flat",
+        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo01.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo17.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo17.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-hdpi_arro2.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-hdpi/arro2.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_wallet.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/wallet.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_rubis_1.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/rubis_1.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_gmail.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/gmail.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_about.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/about.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo5.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo5.xml"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-hdpi_logo14.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-hdpi/logo14.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_fb.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/fb.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo10.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo10.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_fb.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/fb.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_no_see.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/no_see.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_images.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/images.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo14.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo14.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo14.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo14.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_see.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/see.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/xml_data_extraction_rules.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_id2.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/id2.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo15.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo15.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_unnamed.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/unnamed.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo1.jpeg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo1.jpeg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo12.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo12.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_images.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/images.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_identification_card_6449294.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/identification_card_6449294.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_arrow.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/arrow.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/xml_backup_rules.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/xml/backup_rules.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_pass.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/pass.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_gazz_1.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/gazz_1.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_see.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/see.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_car_breakdowns_uganda.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/car_breakdowns_uganda.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logout.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logout.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_shell_2.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/shell_2.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-hdpi_logo1.jpeg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-hdpi/logo1.jpeg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo10.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo10.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_ic_profile.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/ic_profile.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo8.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo8.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_car_breakdowns_uganda.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/car_breakdowns_uganda.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo7.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo7.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo11.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo11.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_pass.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/pass.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_no_see.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/no_see.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-hdpi_logo13.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-hdpi/logo13.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-hdpi_logo13.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-hdpi/logo13.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_unnamed.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/unnamed.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_home.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/home.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_unnamed.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/unnamed.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-hdpi_logo1.jpeg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-hdpi/logo1.jpeg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo16.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo16.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-hdpi_logo20.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-hdpi/logo20.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_gram.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/gram.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_no_see.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/no_see.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_gram.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/gram.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_shell_1.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/shell_1.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/xml_data_extraction_rules.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/xml/data_extraction_rules.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_see.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/see.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo7.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo7.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_communication.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/communication.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_payment.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/payment.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_ic_profile.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/ic_profile.xml"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_id.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/id.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_total_1.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/total_1.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_fb.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/fb.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_rubius_1.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/rubius_1.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo8.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo8.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo15.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo15.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_rubius_1.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/rubius_1.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_ticktok.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/ticktok.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo7.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo7.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_instagram.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/instagram.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_flag.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/flag.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.project.auto_aid.app-main-76:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_logo13.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/logo13.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_fuel.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/fuel.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_total_1.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/total_1.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo5.xml.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo5.xml"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo11.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo11.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_logo13.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/logo13.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable-mdpi_identification_card_6449294.png.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable-mdpi/identification_card_6449294.png"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_unnamed.jpg.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/unnamed.jpg"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable-mdpi_card.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable-mdpi/card.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo12.jpg.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo12.jpg"
     },
     {
-        "merged": "com.project.auto_aid.app-debug-74:/drawable_logo11.png.flat",
-        "source": "com.project.auto_aid.app-main-76:/drawable/logo11.png"
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-debug-74:/drawable_logo6.xml.flat",
+        "source": "/Users/davekeyz/.gradle/daemon/8.13/com.project.auto_aid.app-main-76:/drawable/logo6.xml"
     }
 ]
