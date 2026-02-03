@@ -107,7 +107,7 @@ fun LoginScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text("Welcome back!", fontSize = 38.sp, fontWeight = FontWeight.Bold)
+            Text("Welcome back! thank you", fontSize = 38.sp, fontWeight = FontWeight.Bold)
             Text("Login to your Account", color = Color.Gray)
 
             Spacer(modifier = Modifier.height(12.dp))
