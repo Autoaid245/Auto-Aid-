@@ -120,7 +120,7 @@ fun SettingsScreenUI(
                     Row(verticalAlignment = Alignment.CenterVertically) {
 
                         Image(
-                            painter = painterResource(R.drawable.logo1),
+                            painter = painterResource(R.drawable.logo01),
                             contentDescription = "Profile",
                             modifier = Modifier.size(75.dp).clip(CircleShape)
                         )

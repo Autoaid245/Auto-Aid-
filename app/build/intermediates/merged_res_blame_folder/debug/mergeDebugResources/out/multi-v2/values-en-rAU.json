@@ -4,41 +4,24 @@
             "outputFile": "com.project.auto_aid.app-mergeDebugResources-72:/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\fbb2ca4b600a636b7fbd24b84ad9e4fd\\transformed\\core-1.16.0\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/d6e3ecba46cfa71069093b0f6a4b68a8/transformed/browser-1.4.0/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,151,253,352,451,555,658,774",
-                        "endColumns": "95,101,98,98,103,102,115,100",
-                        "endOffsets": "146,248,347,446,550,653,769,870"
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,153,250,359",
+                        "endColumns": "97,96,108,98",
+                        "endOffsets": "148,245,354,453"
                     },
                     "to": {
-                        "startLines": "33,34,35,36,37,38,39,130",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "3188,3284,3386,3485,3584,3688,3791,13283",
-                        "endColumns": "95,101,98,98,103,102,115,100",
-                        "endOffsets": "3279,3381,3480,3579,3683,3786,3902,13379"
+                        "startLines": "43,48,49,50",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "4187,4655,4752,4861",
+                        "endColumns": "97,96,108,98",
+                        "endOffsets": "4280,4747,4856,4955"
                     }
                 },
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\ff0235c55c95f897d90a781c33e41bef\\transformed\\foundation\\res\\values-en-rAU\\values-en-rAU.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,159,245",
-                        "endColumns": "103,85,84",
-                        "endOffsets": "154,240,325"
-                    },
-                    "to": {
-                        "startLines": "31,134,135",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "2988,13648,13734",
-                        "endColumns": "103,85,84",
-                        "endOffsets": "3087,13729,13814"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\afd98c9ac4912622b383847575dba562\\transformed\\appcompat-1.7.0\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/afd98c9ac4912622b383847575dba562/transformed/appcompat-1.7.0/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -55,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\5d61c22c082fb43b5d907f52e8ccae4a\\transformed\\biometric-1.1.0\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/5d61c22c082fb43b5d907f52e8ccae4a/transformed/biometric-1.1.0/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
@@ -72,41 +55,41 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\9ce38ea78842b9d70b8a7d0baca6e3bc\\transformed\\ui\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/fbb2ca4b600a636b7fbd24b84ad9e4fd/transformed/core-1.16.0/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,201,293,375,469,568,655,737,826,915,999,1077,1159,1232,1316,1392,1464,1534,1611,1677",
-                        "endColumns": "95,91,81,93,98,86,81,88,88,83,77,81,72,83,75,71,69,76,65,120",
-                        "endOffsets": "196,288,370,464,563,650,732,821,910,994,1072,1154,1227,1311,1387,1459,1529,1606,1672,1793"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,253,352,451,555,658,774",
+                        "endColumns": "95,101,98,98,103,102,115,100",
+                        "endOffsets": "146,248,347,446,550,653,769,870"
                     },
                     "to": {
-                        "startLines": "32,40,41,44,46,47,61,62,120,121,122,123,125,126,127,128,129,131,132,133",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "3092,3907,3999,4285,4469,4568,6207,6289,12492,12581,12665,12743,12908,12981,13065,13141,13213,13384,13461,13527",
-                        "endColumns": "95,91,81,93,98,86,81,88,88,83,77,81,72,83,75,71,69,76,65,120",
-                        "endOffsets": "3183,3994,4076,4374,4563,4650,6284,6373,12576,12660,12738,12820,12976,13060,13136,13208,13278,13456,13522,13643"
+                        "startLines": "33,34,35,36,37,38,39,130",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "3188,3284,3386,3485,3584,3688,3791,13283",
+                        "endColumns": "95,101,98,98,103,102,115,100",
+                        "endOffsets": "3279,3381,3480,3579,3683,3786,3902,13379"
                     }
                 },
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\8ff686835118a677297339f835870d0e\\transformed\\credentials-1.5.0\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/ff0235c55c95f897d90a781c33e41bef/transformed/foundation/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,167",
-                        "endColumns": "111,113",
-                        "endOffsets": "162,276"
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,159,245",
+                        "endColumns": "103,85,84",
+                        "endOffsets": "154,240,325"
                     },
                     "to": {
-                        "startLines": "29,30",
-                        "startColumns": "4,4",
-                        "startOffsets": "2762,2874",
-                        "endColumns": "111,113",
-                        "endOffsets": "2869,2983"
+                        "startLines": "31,134,135",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "2988,13648,13734",
+                        "endColumns": "103,85,84",
+                        "endOffsets": "3087,13729,13814"
                     }
                 },
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\cb1d7155a98c8ea54516881f1580d85e\\transformed\\material3-release\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/cb1d7155a98c8ea54516881f1580d85e/transformed/material3-release/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -123,20 +106,37 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Achom Phionah\\.gradle\\caches\\8.13\\transforms\\d6e3ecba46cfa71069093b0f6a4b68a8\\transformed\\browser-1.4.0\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/9ce38ea78842b9d70b8a7d0baca6e3bc/transformed/ui/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
-                        "startLines": "2,3,4,5",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,153,250,359",
-                        "endColumns": "97,96,108,98",
-                        "endOffsets": "148,245,354,453"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,201,293,375,469,568,655,737,826,915,999,1077,1159,1232,1316,1392,1464,1534,1611,1677",
+                        "endColumns": "95,91,81,93,98,86,81,88,88,83,77,81,72,83,75,71,69,76,65,120",
+                        "endOffsets": "196,288,370,464,563,650,732,821,910,994,1072,1154,1227,1311,1387,1459,1529,1606,1672,1793"
                     },
                     "to": {
-                        "startLines": "43,48,49,50",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "4187,4655,4752,4861",
-                        "endColumns": "97,96,108,98",
-                        "endOffsets": "4280,4747,4856,4955"
+                        "startLines": "32,40,41,44,46,47,61,62,120,121,122,123,125,126,127,128,129,131,132,133",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3092,3907,3999,4285,4469,4568,6207,6289,12492,12581,12665,12743,12908,12981,13065,13141,13213,13384,13461,13527",
+                        "endColumns": "95,91,81,93,98,86,81,88,88,83,77,81,72,83,75,71,69,76,65,120",
+                        "endOffsets": "3183,3994,4076,4374,4563,4650,6284,6373,12576,12660,12738,12820,12976,13060,13136,13208,13278,13456,13522,13643"
+                    }
+                },
+                {
+                    "source": "/Users/davekeyz/.gradle/caches/8.13/transforms/8ff686835118a677297339f835870d0e/transformed/credentials-1.5.0/res/values-en-rAU/values-en-rAU.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,167",
+                        "endColumns": "111,113",
+                        "endOffsets": "162,276"
+                    },
+                    "to": {
+                        "startLines": "29,30",
+                        "startColumns": "4,4",
+                        "startOffsets": "2762,2874",
+                        "endColumns": "111,113",
+                        "endOffsets": "2869,2983"
                     }
                 }
             ]

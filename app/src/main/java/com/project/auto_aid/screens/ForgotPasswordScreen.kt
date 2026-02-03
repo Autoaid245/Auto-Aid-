@@ -59,7 +59,7 @@ fun ForgotPasswordScreen(navController: NavController) {
 
         // Icon (top)
         Image(
-            painter = painterResource(id = R.drawable.logo1),
+            painter = painterResource(id = R.drawable.logo01),
             contentDescription = null,
             modifier = Modifier
                 .size(130.dp)

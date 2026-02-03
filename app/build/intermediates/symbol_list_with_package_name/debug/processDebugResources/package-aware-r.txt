@@ -3712,7 +3712,6 @@ drawable identification_card_6449294
 drawable images
 drawable instagram
 drawable logo01
-drawable logo1
 drawable logo10
 drawable logo11
 drawable logo12
@@ -4585,7 +4584,7 @@ layout splash_screen_view
 layout support_simple_spinner_dropdown_item
 mipmap ic_launcher
 mipmap ic_launcher_round
-mipmap logo1
+mipmap logo01
 mipmap logo20
 plurals mtrl_badge_content_description
 raw firebase_common_keep

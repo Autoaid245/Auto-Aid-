@@ -68,7 +68,7 @@ fun UserInfoScreen(navController: NavController) {
 
         // ========= PROFILE IMAGE ==========
         Image(
-            painter = painterResource(id = R.drawable.logo1), // Your profile picture
+            painter = painterResource(id = R.drawable.logo01), // Your profile picture
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .size(80.dp)

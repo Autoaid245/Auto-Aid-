@@ -3711,7 +3711,6 @@ int drawable identification_card_6449294 0x7f0800cb
 int drawable images 0x7f0800cc
 int drawable instagram 0x7f0800cd
 int drawable logo01 0x7f0800ce
-int drawable logo1 0x7f0800cf
 int drawable logo10 0x7f0800d0
 int drawable logo11 0x7f0800d1
 int drawable logo12 0x7f0800d2
@@ -4584,7 +4583,7 @@ int layout splash_screen_view 0x7f0c006f
 int layout support_simple_spinner_dropdown_item 0x7f0c0070
 int mipmap ic_launcher 0x7f0e0000
 int mipmap ic_launcher_round 0x7f0e0001
-int mipmap logo1 0x7f0e0002
+int mipmap logo01 0x7f0e0004
 int mipmap logo20 0x7f0e0003
 int plurals mtrl_badge_content_description 0x7f0f0000
 int raw firebase_common_keep 0x7f100000
