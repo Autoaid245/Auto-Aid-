@@ -1,9 +1,7 @@
 package com.project.auto_aid.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -11,9 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -22,8 +18,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.project.auto_aid.R
 import com.project.auto_aid.navigation.Routes
+
+/* ================= SIGNUP SCREEN ================= */
 
 @Composable
 fun SignupScreen(navController: NavController) {
@@ -32,279 +29,266 @@ fun SignupScreen(navController: NavController) {
     val auth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
 
-    // ================= STATES =================
+    // STATES
     var role by remember { mutableStateOf<String?>(null) }
+    var loading by remember { mutableStateOf(false) }
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
+
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
     var showPassword by remember { mutableStateOf(false) }
     var showConfirm by remember { mutableStateOf(false) }
 
-    var passwordStrength by remember { mutableStateOf("") }
     var businessType by remember { mutableStateOf("") }
-    var loading by remember { mutableStateOf(false) }
+    var subscription by remember { mutableStateOf("monthly") }
 
-    fun evaluateStrength(value: String): String =
+    val passwordStrength = remember(password) {
         when {
-            value.length < 4 -> "Weak"
-            value.length >= 8 &&
-                    value.any { it.isUpperCase() } &&
-                    value.any { it.isDigit() } &&
-                    value.any { "!@#\$%^&*".contains(it) } -> "Strong"
+            password.length < 4 -> "Weak"
+            password.length < 7 -> "Medium"
+            password.any { it.isUpperCase() } &&
+                    password.any { it.isDigit() } &&
+                    password.any { "!@#\$%^&*".contains(it) } -> "Strong"
             else -> "Medium"
         }
+    }
 
-    // ================= ROLE SELECTION =================
+    /* ================= ROLE SELECTION ================= */
+
     if (role == null) {
         RoleSelection { role = it }
         return
     }
 
-    // ================= RESPONSIVE LAYOUT =================
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val isMobile = maxWidth < 600.dp
+    /* ================= MAIN UI ================= */
 
-        if (isMobile) {
-            // ================= MOBILE =================
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.logo14),
-                    contentDescription = null,
-                    modifier = Modifier.size(90.dp),
-                    contentScale = ContentScale.Fit
-                )
+        Text("Create Account", fontSize = 26.sp, fontWeight = FontWeight.Bold)
+        Text("Fast help at your location", color = Color.Gray)
 
-                Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-                Text("Welcome", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                Text("Fast help at your location.", color = Color.Gray)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Input("Full Name", name) { name = it }
+                Input("Email Address", email) { email = it }
 
-                SignupForm(
-                    role = role!!,
-                    name = name,
-                    email = email,
-                    phone = phone,
-                    password = password,
-                    confirmPassword = confirmPassword,
-                    showPassword = showPassword,
-                    showConfirm = showConfirm,
-                    passwordStrength = passwordStrength,
-                    businessType = businessType,
-                    loading = loading,
-                    onNameChange = { name = it },
-                    onEmailChange = { email = it },
-                    onPhoneChange = { phone = it },
-                    onPasswordChange = {
-                        password = it
-                        passwordStrength = evaluateStrength(it)
-                    },
-                    onConfirmChange = { confirmPassword = it },
-                    togglePassword = { showPassword = !showPassword },
-                    toggleConfirm = { showConfirm = !showConfirm },
-                    onBusinessTypeChange = { businessType = it },
-                    onSubmit = {
-                        signup(
-                            context, auth, db,
-                            name, email, phone, password,
-                            confirmPassword, role!!, businessType,
-                            navController
-                        ) { loading = it }
-                    }
-                )
-            }
+                Input(
+                    label = "Phone (776 123456)",
+                    value = phone
+                ) { phone = formatUgandaPhone(it) }
 
-        } else {
-            // ================= TABLET / DESKTOP =================
-            Row(modifier = Modifier.fillMaxSize()) {
+                PasswordInput(
+                    label = "Password",
+                    value = password,
+                    show = showPassword,
+                    toggle = { showPassword = !showPassword }
+                ) { password = it }
 
-                // LEFT PANEL
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .background(Color(0xFF0A9AD9)),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.logo14),
-                        contentDescription = null,
-                        modifier = Modifier.size(120.dp)
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text("Welcome", color = Color.White, fontSize = 28.sp)
+                PasswordInput(
+                    label = "Confirm Password",
+                    value = confirmPassword,
+                    show = showConfirm,
+                    toggle = { showConfirm = !showConfirm }
+                ) { confirmPassword = it }
+
+                if (password.isNotEmpty()) {
                     Text(
-                        "Fast help at your location.",
-                        color = Color.White.copy(0.8f)
+                        "$passwordStrength Password",
+                        color = when (passwordStrength) {
+                            "Strong" -> Color(0xFF2E7D32)
+                            "Medium" -> Color(0xFFF9A825)
+                            else -> Color.Red
+                        },
+                        fontWeight = FontWeight.Bold
                     )
                 }
 
-                // RIGHT PANEL
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Card(
-                        modifier = Modifier.padding(24.dp),
-                        shape = RoundedCornerShape(24.dp),
-                        elevation = CardDefaults.cardElevation(8.dp)
-                    ) {
-                        SignupForm(
-                            role = role!!,
-                            name = name,
-                            email = email,
-                            phone = phone,
-                            password = password,
-                            confirmPassword = confirmPassword,
-                            showPassword = showPassword,
-                            showConfirm = showConfirm,
-                            passwordStrength = passwordStrength,
-                            businessType = businessType,
-                            loading = loading,
-                            onNameChange = { name = it },
-                            onEmailChange = { email = it },
-                            onPhoneChange = { phone = it },
-                            onPasswordChange = {
-                                password = it
-                                passwordStrength = evaluateStrength(it)
-                            },
-                            onConfirmChange = { confirmPassword = it },
-                            togglePassword = { showPassword = !showPassword },
-                            toggleConfirm = { showConfirm = !showConfirm },
-                            onBusinessTypeChange = { businessType = it },
-                            onSubmit = {
-                                signup(
-                                    context, auth, db,
-                                    name, email, phone, password,
-                                    confirmPassword, role!!, businessType,
-                                    navController
-                                ) { loading = it }
-                            }
-                        )
-                    }
+                /* ===== PROVIDER FIELDS ===== */
+                if (role == "provider") {
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Dropdown(
+                        label = "Service Type",
+                        options = listOf("garage", "fuel", "towing", "ambulance"),
+                        selected = businessType
+                    ) { businessType = it }
+
+                    Dropdown(
+                        label = "Subscription",
+                        options = listOf("monthly", "quarterly", "yearly"),
+                        selected = subscription
+                    ) { subscription = it }
                 }
             }
         }
-    }
-}
 
-/* ================= FORM ================= */
+        Spacer(modifier = Modifier.height(24.dp))
 
-@Composable
-fun SignupForm(
-    role: String,
-    name: String,
-    email: String,
-    phone: String,
-    password: String,
-    confirmPassword: String,
-    showPassword: Boolean,
-    showConfirm: Boolean,
-    passwordStrength: String,
-    businessType: String,
-    loading: Boolean,
-    onNameChange: (String) -> Unit,
-    onEmailChange: (String) -> Unit,
-    onPhoneChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onConfirmChange: (String) -> Unit,
-    togglePassword: () -> Unit,
-    toggleConfirm: () -> Unit,
-    onBusinessTypeChange: (String) -> Unit,
-    onSubmit: () -> Unit
-) {
+        Button(
+            onClick = {
 
-    Column(modifier = Modifier.padding(20.dp)) {
+                if (loading) return@Button
 
-        Text("AutoAID", fontSize = 22.sp, fontWeight = FontWeight.Bold)
-        Text("Emergency Services", color = Color.Gray)
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(name, onNameChange, label = { Text("Full Name") }, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(email, onEmailChange, label = { Text("Email") }, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(phone, onPhoneChange, label = { Text("Phone") }, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = password,
-            onValueChange = onPasswordChange,
-            label = { Text("Password") },
-            visualTransformation =
-                if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                Text(
-                    if (showPassword) "🙈" else "👁️",
-                    modifier = Modifier.clickable { togglePassword() }
-                )
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = onConfirmChange,
-            label = { Text("Confirm Password") },
-            visualTransformation =
-                if (showConfirm) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                Text(
-                    if (showConfirm) "🙈" else "👁️",
-                    modifier = Modifier.clickable { toggleConfirm() }
-                )
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        if (password.isNotEmpty()) {
-            Text(
-                "$passwordStrength Password",
-                color = when (passwordStrength) {
-                    "Weak" -> Color.Red
-                    "Medium" -> Color(0xFFFF9800)
-                    else -> Color.Green
+                if (
+                    name.isBlank() ||
+                    email.isBlank() ||
+                    phone.isBlank() ||
+                    password.isBlank()
+                ) {
+                    toast(context, "Fill in all fields")
+                    return@Button
                 }
-            )
-        }
 
-        if (role == "PROVIDER") {
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = businessType,
-                onValueChange = onBusinessTypeChange,
-                label = { Text("Service Type") },
-                modifier = Modifier.fillMaxWidth()
-            )
+                if (!isValidUgandaPhone(phone)) {
+                    toast(context, "Invalid Uganda phone number")
+                    return@Button
+                }
+
+                if (password != confirmPassword) {
+                    toast(context, "Passwords do not match")
+                    return@Button
+                }
+
+                loading = true
+
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener { result ->
+
+                        val uid = result.user!!.uid
+
+                        val data = hashMapOf(
+                            "name" to name,
+                            "email" to email,
+                            "phone" to "+256${phone.replace(" ", "")}",
+                            "role" to role,
+                            "businessType" to businessType,
+                            "subscription" to subscription
+                        )
+
+                        db.collection("users").document(uid)
+                            .set(data)
+                            .addOnSuccessListener {
+                                loading = false
+                                navController.navigate(Routes.LoginScreen.route) {
+                                    popUpTo(Routes.SignupScreen.route) { inclusive = true }
+                                }
+                            }
+                    }
+                    .addOnFailureListener {
+                        loading = false
+                        toast(context, it.message ?: "Signup failed")
+                    }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            enabled = !loading,
+            shape = RoundedCornerShape(28.dp)
+        ) {
+            if (loading) {
+                CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp)
+            } else {
+                Text("Continue", fontSize = 18.sp)
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = onSubmit,
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !loading
-        ) {
-            Text(if (loading) "Processing..." else "Continue")
+        TextButton(onClick = {
+            navController.navigate(Routes.LoginScreen.route)
+        }) {
+            Text("Already have an account? Login", color = Color(0xFF0A9AD9))
+        }
+    }
+}
+
+/* ================= COMPONENTS ================= */
+
+@Composable
+fun Input(label: String, value: String, onChange: (String) -> Unit) {
+    Spacer(modifier = Modifier.height(10.dp))
+    OutlinedTextField(
+        value = value,
+        onValueChange = onChange,
+        label = { Text(label) },
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+fun PasswordInput(
+    label: String,
+    value: String,
+    show: Boolean,
+    toggle: () -> Unit,
+    onChange: (String) -> Unit
+) {
+    Spacer(modifier = Modifier.height(10.dp))
+    OutlinedTextField(
+        value = value,
+        onValueChange = onChange,
+        label = { Text(label) },
+        singleLine = true,
+        visualTransformation =
+            if (show) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            Text(if (show) "🙈" else "👁️", modifier = Modifier.clickable { toggle() })
+        },
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+fun Dropdown(
+    label: String,
+    options: List<String>,
+    selected: String,
+    onSelect: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Box {
+        OutlinedTextField(
+            value = selected,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = true }
+        )
+
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            options.forEach {
+                DropdownMenuItem(
+                    text = { Text(it) },
+                    onClick = {
+                        onSelect(it)
+                        expanded = false
+                    }
+                )
+            }
         }
     }
 }
@@ -313,36 +297,22 @@ fun SignupForm(
 
 @Composable
 fun RoleSelection(onSelect: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5)),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Card(
-            shape = RoundedCornerShape(24.dp),
-            elevation = CardDefaults.cardElevation(8.dp),
-            modifier = Modifier.fillMaxWidth(0.9f)
+            modifier = Modifier.fillMaxWidth(0.85f),
+            shape = RoundedCornerShape(24.dp)
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("AutoAID", fontSize = 28.sp, fontWeight = FontWeight.Bold)
-                Text("Emergency Services", color = Color.Gray)
-
-                Spacer(modifier = Modifier.height(20.dp))
-
                 Text("Sign Up As", fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(16.dp))
-
-                Button(onClick = { onSelect("USER") }, modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = { onSelect("user") }, modifier = Modifier.fillMaxWidth()) {
                     Text("👤 User")
                 }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Button(onClick = { onSelect("PROVIDER") }, modifier = Modifier.fillMaxWidth()) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Button(onClick = { onSelect("provider") }, modifier = Modifier.fillMaxWidth()) {
                     Text("🛠 Service Provider")
                 }
             }
@@ -350,50 +320,21 @@ fun RoleSelection(onSelect: (String) -> Unit) {
     }
 }
 
-/* ================= SIGNUP LOGIC ================= */
+/* ================= UTILS ================= */
 
-fun signup(
-    context: android.content.Context,
-    auth: FirebaseAuth,
-    db: FirebaseFirestore,
-    name: String,
-    email: String,
-    phone: String,
-    password: String,
-    confirmPassword: String,
-    role: String,
-    businessType: String,
-    navController: NavController,
-    setLoading: (Boolean) -> Unit
-) {
-    if (name.isBlank() || email.isBlank() || phone.isBlank() || password != confirmPassword) {
-        Toast.makeText(context, "Check your details", Toast.LENGTH_SHORT).show()
-        return
-    }
+fun formatUgandaPhone(input: String): String {
+    val digits = input.filter { it.isDigit() }.take(9)
+    return if (digits.length > 3)
+        digits.substring(0, 3) + " " + digits.substring(3)
+    else digits
+}
 
-    setLoading(true)
+fun isValidUgandaPhone(phone: String): Boolean {
+    val cleaned = phone.replace(" ", "")
+    val prefix = cleaned.take(2)
+    return cleaned.length == 9 && prefix in listOf("70", "74", "75", "76", "77", "78")
+}
 
-    auth.createUserWithEmailAndPassword(email, password)
-        .addOnSuccessListener {
-            val uid = it.user!!.uid
-            val data = hashMapOf(
-                "name" to name,
-                "email" to email,
-                "phone" to phone,
-                "role" to role,
-                "businessType" to businessType
-            )
-
-            db.collection("users").document(uid).set(data)
-                .addOnSuccessListener {
-                    setLoading(false)
-                    navController.navigate(Routes.HomeScreen.route) {
-                        popUpTo(Routes.SignupScreen.route) { inclusive = true }
-                    }
-                }
-        }
-        .addOnFailureListener {
-            setLoading(false)
-            Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-        }
+fun toast(context: android.content.Context, msg: String) {
+    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 }

@@ -11,9 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -41,6 +41,7 @@ fun LoginScreen(navController: NavController) {
     var showPassword by remember { mutableStateOf(false) }
     var loading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf("") }
+    var navigated by remember { mutableStateOf(false) }
 
     // STEP 1 — ROLE SELECTION
     if (role == null) {
@@ -61,7 +62,7 @@ fun LoginScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(170.dp))
+            Spacer(modifier = Modifier.height(200.dp))
 
             // LOGO
             Box(
@@ -80,8 +81,19 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Welcome back!", fontSize = 30.sp, fontWeight = FontWeight.Bold)
-            Text("Login to your Account", color = Color.Gray)
+            // TEXT (CLEAR & READABLE)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .background(
+                        Color.White.copy(alpha = 0.95f),
+                        RoundedCornerShape(12.dp)
+                    )
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                Text("Welcome back!", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+                Text("Login to your Account", color = Color.Gray)
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -103,6 +115,7 @@ fun LoginScreen(navController: NavController) {
                         onValueChange = { email = it },
                         label = { Text("Email") },
                         singleLine = true,
+                        enabled = !loading,
                         shape = RoundedCornerShape(14.dp),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -114,6 +127,7 @@ fun LoginScreen(navController: NavController) {
                         onValueChange = { password = it },
                         label = { Text("Password") },
                         singleLine = true,
+                        enabled = !loading,
                         shape = RoundedCornerShape(14.dp),
                         visualTransformation =
                             if (showPassword) VisualTransformation.None
@@ -166,6 +180,8 @@ fun LoginScreen(navController: NavController) {
                                     loading = false
                                     val userRole = doc.getString("role")?.lowercase()
 
+                                    if (navigated) return@addOnSuccessListener
+
                                     when (userRole) {
                                         "admin" -> {
                                             errorMsg =
@@ -180,6 +196,7 @@ fun LoginScreen(navController: NavController) {
                                                 auth.signOut()
                                                 return@addOnSuccessListener
                                             }
+                                            navigated = true
                                             navController.navigate(Routes.HomeScreen.route)
                                         }
 
@@ -190,6 +207,7 @@ fun LoginScreen(navController: NavController) {
                                                 auth.signOut()
                                                 return@addOnSuccessListener
                                             }
+                                            navigated = true
                                             navController.navigate(Routes.HomeScreen.route)
                                         }
 
@@ -267,17 +285,15 @@ fun HeroImageSlider() {
 
     val pagerState = rememberPagerState { images.size }
 
-    // AUTO SLIDE
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(4000)
-            pagerState.animateScrollToPage(
-                (pagerState.currentPage + 1) % images.size
-            )
-        }
+    LaunchedEffect(pagerState.currentPage) {
+        delay(4000)
+        pagerState.animateScrollToPage(
+            (pagerState.currentPage + 1) % images.size
+        )
     }
 
     Box {
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
@@ -292,7 +308,21 @@ fun HeroImageSlider() {
             )
         }
 
-        // DOT INDICATORS
+        // DARK GRADIENT FOR TEXT VISIBILITY
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        listOf(
+                            Color.Black.copy(alpha = 0.55f),
+                            Color.Transparent
+                        )
+                    )
+                )
+        )
+
+        // DOTS
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
