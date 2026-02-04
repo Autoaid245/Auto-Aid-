@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -72,10 +73,11 @@ fun SplashScreen(navController: NavController) {
             // LOGO ICON
             Image(
                 painter = painterResource(id = R.drawable.logo01),
-                contentDescription = "Auto Aid Logo",
+                contentDescription = "App Logo",
                 modifier = Modifier
                     .size(150.dp)
-                    .clip(RoundedCornerShape(25.dp)) // ✅ FIX
+                    .clip(RoundedCornerShape(20.dp))
+                    .border(10.1.dp, Color(0xFF0A9AD9), RoundedCornerShape(100.dp))
                     .graphicsLayer(
                         scaleX = scale.value,
                         scaleY = scale.value,

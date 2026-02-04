@@ -8,18 +8,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.project.auto_aid.navigation.Routes
 import kotlinx.coroutines.delay
 
 @Composable
 fun SearchingMechanicScreen(navController: NavHostController) {
 
-    // 🔁 AUTO REDIRECT
+    // 🔁 AUTO REDIRECT (disabled in preview-safe way)
     LaunchedEffect(Unit) {
-        delay(3000) // 3 seconds (adjust if needed)
+        delay(3000)
         navController.navigate(Routes.MechanicAssignedScreen.route) {
             popUpTo(Routes.GarageRequestScreen.route) { inclusive = true }
         }
@@ -31,7 +33,6 @@ fun SearchingMechanicScreen(navController: NavHostController) {
             .background(Color(0xFFF9F9F9)),
         contentAlignment = Alignment.Center
     ) {
-
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
             CircularProgressIndicator(
@@ -58,6 +59,9 @@ fun SearchingMechanicScreen(navController: NavHostController) {
     }
 }
 
-class SearchingMechanicScreen(route: Any) {
-
+@Preview(showBackground = true)
+@Composable
+fun SearchingMechanicScreenPreview() {
+    val navController = rememberNavController()
+    SearchingMechanicScreen(navController = navController)
 }
