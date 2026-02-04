@@ -3668,6 +3668,7 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable facebook
 drawable fb
 drawable fingerprint_dialog_error
 drawable fingerprint_dialog_fp_icon
@@ -3675,10 +3676,12 @@ drawable flag
 drawable fuel
 drawable gazz_1
 drawable gmail
+drawable google
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable gram
 drawable hass_1
+drawable hero_bg
 drawable home
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
@@ -3814,6 +3817,7 @@ drawable stabex_1
 drawable stabex_2
 drawable test_level_drawable
 drawable ticktok
+drawable tiktok
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable total_1

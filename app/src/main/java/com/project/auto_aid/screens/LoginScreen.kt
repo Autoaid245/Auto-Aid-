@@ -1,12 +1,11 @@
 package com.project.auto_aid.screens
 
-import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,163 +14,132 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
+import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.project.auto_aid.R
-import com.project.auto_aid.authentcation.presentation.components.SocialMediaOptions
 import com.project.auto_aid.navigation.Routes
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
-import com.project.auto_aid.authentcation.presentation.components.GoogleAuthHelper
+import kotlinx.coroutines.delay
 
+/* ================= LOGIN SCREEN ================= */
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController?) {
+fun LoginScreen(navController: NavController) {
 
+    val auth = FirebaseAuth.getInstance()
+    val db = FirebaseFirestore.getInstance()
+
+    var role by remember { mutableStateOf<String?>(null) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
+    var loading by remember { mutableStateOf(false) }
+    var errorMsg by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
-
-    val googleLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == android.app.Activity.RESULT_OK) {
-            GoogleAuthHelper.handleResult(
-                data = result.data,
-                onSuccess = {
-                    Toast.makeText(context, "Google login successful", Toast.LENGTH_SHORT).show()
-                    navController?.navigate(Routes.HomeScreen.route) {
-                        popUpTo(Routes.LoginScreen.route) { inclusive = true }
-                    }
-                },
-                onError = {
-                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-                }
-            )
-        }
+    // STEP 1 — ROLE SELECTION
+    if (role == null) {
+        RoleSelectionScreen { role = it }
+        return
     }
 
+    // STEP 2 — LOGIN UI
+    Box(modifier = Modifier.fillMaxSize()) {
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-
-        // Faint background image
-        Image(
-            painter = painterResource(id = R.drawable.logo14),
-            contentDescription = "Background",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp),
-            contentScale = ContentScale.Crop,
-            alpha = 1.18f   // Must be between 0f..1f
-        )
+        HeroImageSlider()
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(170.dp))
 
             // LOGO
-            Image(
-                painter = painterResource(id = R.drawable.logo01),
-                contentDescription = "App Logo",
+            Box(
                 modifier = Modifier
-                    .size(150.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .border(10.1.dp, Color(0xFF0A9AD9), RoundedCornerShape(100.dp))
-            )
+                    .size(110.dp)
+                    .clip(CircleShape)
+                    .background(Color.White),
+                contentAlignment = Alignment.Center
+            ) {
+                AsyncImage(
+                    model = R.drawable.logo01,
+                    contentDescription = null,
+                    modifier = Modifier.size(80.dp)
+                )
+            }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Welcome back!", fontSize = 38.sp, fontWeight = FontWeight.Bold)
+            Text("Welcome back!", fontSize = 30.sp, fontWeight = FontWeight.Bold)
             Text("Login to your Account", color = Color.Gray)
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // ================= CARD WRAPPING INPUTS =================
+            // LOGIN CARD
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(Color(0xFFFFFFFF)),
-                elevation = CardDefaults.cardElevation(6.dp)
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(8.dp)
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
 
-                    // EMAIL
+                    if (errorMsg.isNotEmpty()) {
+                        Text(errorMsg, color = Color.Red, fontSize = 14.sp)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
                         label = { Text("Email") },
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        shape = RoundedCornerShape(14.dp),
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    Spacer(modifier = Modifier.height(1.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                    // PASSWORD
                     OutlinedTextField(
                         value = password,
                         onValueChange = { password = it },
                         label = { Text("Password") },
                         singleLine = true,
-                        visualTransformation = if (showPassword)
-                            VisualTransformation.None
-                        else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        shape = RoundedCornerShape(14.dp),
+                        visualTransformation =
+                            if (showPassword) VisualTransformation.None
+                            else PasswordVisualTransformation(),
                         trailingIcon = {
-                            IconButton(onClick = { showPassword = !showPassword }) {
-                                Image(
-                                    painter = painterResource(
-                                        id = if (showPassword) R.drawable.no_see else R.drawable.see
-                                    ),
-                                    contentDescription = null
-                                )
-                            }
+                            Text(
+                                if (showPassword) "🙈" else "👁️",
+                                modifier = Modifier.clickable {
+                                    showPassword = !showPassword
+                                }
+                            )
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "Forgot password?",
+                        "Forgot password?",
                         color = Color(0xFF0A9AD9),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
                         modifier = Modifier
                             .align(Alignment.End)
                             .clickable {
-                                navController?.navigate(Routes.ForgotPasswordScreen.route)
+                                navController.navigate(Routes.ForgotPasswordScreen.route)
                             }
                     )
-
-
-
                 }
             }
 
@@ -180,35 +148,81 @@ fun LoginScreen(navController: NavController?) {
             // LOGIN BUTTON
             Button(
                 onClick = {
-                    if (email.isNotEmpty() && password.isNotEmpty()) {
-                        Firebase.auth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
-                                    navController?.navigate(Routes.HomeScreen.route) {
-                                        popUpTo(Routes.LoginScreen.route) { inclusive = true }
-                                    }
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        task.exception?.message ?: "Login failed",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                    } else {
-                        Toast.makeText(context, "Enter email & password", Toast.LENGTH_SHORT).show()
+                    if (loading) return@Button
+                    if (email.isBlank() || password.isBlank()) {
+                        errorMsg = "Enter email and password"
+                        return@Button
                     }
+
+                    loading = true
+                    errorMsg = ""
+
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnSuccessListener { result ->
+                            val uid = result.user!!.uid
+
+                            db.collection("users").document(uid).get()
+                                .addOnSuccessListener { doc ->
+                                    loading = false
+                                    val userRole = doc.getString("role")?.lowercase()
+
+                                    when (userRole) {
+                                        "admin" -> {
+                                            errorMsg =
+                                                "Admin access is temporarily unavailable."
+                                            auth.signOut()
+                                        }
+
+                                        "provider" -> {
+                                            if (role != "provider") {
+                                                errorMsg =
+                                                    "This is a provider account. Select Provider login."
+                                                auth.signOut()
+                                                return@addOnSuccessListener
+                                            }
+                                            navController.navigate(Routes.HomeScreen.route)
+                                        }
+
+                                        "user" -> {
+                                            if (role != "user") {
+                                                errorMsg =
+                                                    "This is a user account. Select User login."
+                                                auth.signOut()
+                                                return@addOnSuccessListener
+                                            }
+                                            navController.navigate(Routes.HomeScreen.route)
+                                        }
+
+                                        else -> {
+                                            errorMsg = "Unknown account type"
+                                            auth.signOut()
+                                        }
+                                    }
+                                }
+                        }
+                        .addOnFailureListener {
+                            loading = false
+                            errorMsg = it.message ?: "Login failed"
+                        }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(56.dp),
+                shape = RoundedCornerShape(28.dp),
+                enabled = !loading,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0A9AD9),
-                    contentColor = Color.White
+                    containerColor = Color(0xFF0A9AD9)
                 )
             ) {
-                Text("Login", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                if (loading) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        strokeWidth = 2.dp,
+                        modifier = Modifier.size(22.dp)
+                    )
+                } else {
+                    Text("Login", fontSize = 18.sp)
+                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -217,51 +231,115 @@ fun LoginScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+                AsyncImage(R.drawable.gmail, null, Modifier.size(42.dp))
+                AsyncImage(R.drawable.fb, null, Modifier.size(42.dp))
+                AsyncImage(R.drawable.tiktok, null, Modifier.size(42.dp))
+                AsyncImage(R.drawable.instagram, null, Modifier.size(42.dp))
+            }
 
-            SocialMediaOptions(
-                onGoogleClick = {
-                    val intent = GoogleAuthHelper.getSignInIntent(context)
-                    googleLauncher.launch(intent)
-                },
-                onFacebookClick = {
-                    Toast.makeText(context, "Facebook login coming soon", Toast.LENGTH_SHORT).show()
-                },
-                onTikTokClick = {
-                    Toast.makeText(context, "TikTok login coming soon", Toast.LENGTH_SHORT).show()
-                },
-                onInstagramClick = {
-                    Toast.makeText(context, "Instagram login coming soon", Toast.LENGTH_SHORT).show()
-                }
-            )
+            Spacer(modifier = Modifier.height(24.dp))
 
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // SIGNUP REDIRECT
-            TextButton(
-                onClick = {
-                    navController?.navigate(Routes.SignupScreen.route)
-                }
-            ) {
+            TextButton(onClick = {
+                navController.navigate(Routes.SignupScreen.route)
+            }) {
                 Text(
-                    buildAnnotatedString {
-                        append("Don't have an Account? ")
-                        withStyle(
-                            SpanStyle(
-                                color = Color(0xFF0A9AD9),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 17.sp
-                            )
-                        ) { append("Sign Up") }
-                    }
+                    "Don’t have an account? Sign Up",
+                    color = Color(0xFF0A9AD9),
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+/* ================= HERO IMAGE SLIDER ================= */
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen(navController = rememberNavController())
+fun HeroImageSlider() {
+
+    val images = listOf(
+        R.drawable.total_1,
+        R.drawable.shell_2,
+        R.drawable.logo14
+    )
+
+    val pagerState = rememberPagerState { images.size }
+
+    // AUTO SLIDE
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(4000)
+            pagerState.animateScrollToPage(
+                (pagerState.currentPage + 1) % images.size
+            )
+        }
+    }
+
+    Box {
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(240.dp)
+        ) { page ->
+            AsyncImage(
+                model = images[page],
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+        // DOT INDICATORS
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            repeat(images.size) { index ->
+                Box(
+                    modifier = Modifier
+                        .size(if (pagerState.currentPage == index) 10.dp else 8.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (pagerState.currentPage == index)
+                                Color.White
+                            else
+                                Color.White.copy(alpha = 0.5f)
+                        )
+                )
+            }
+        }
+    }
+}
+
+/* ================= ROLE SELECTION ================= */
+
+@Composable
+fun RoleSelectionScreen(onSelect: (String) -> Unit) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Card(
+            modifier = Modifier.fillMaxWidth(0.85f),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("Login As", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = { onSelect("user") }, modifier = Modifier.fillMaxWidth()) {
+                    Text("👤 User Login")
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                Button(onClick = { onSelect("provider") }, modifier = Modifier.fillMaxWidth()) {
+                    Text("🛠 Provider Login")
+                }
+            }
+        }
+    }
 }

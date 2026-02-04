@@ -11,13 +11,16 @@ drawable car_breakdowns_uganda
 drawable card
 drawable communication
 drawable contact
+drawable facebook
 drawable fb
 drawable flag
 drawable fuel
 drawable gazz_1
 drawable gmail
+drawable google
 drawable gram
 drawable hass_1
+drawable hero_bg
 drawable home
 drawable ic_profile
 drawable id
@@ -54,6 +57,7 @@ drawable shell_2
 drawable stabex_1
 drawable stabex_2
 drawable ticktok
+drawable tiktok
 drawable total_1
 drawable total_2
 drawable unnamed
