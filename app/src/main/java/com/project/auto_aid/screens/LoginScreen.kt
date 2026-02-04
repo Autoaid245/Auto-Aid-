@@ -13,13 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,8 +38,11 @@ import kotlinx.coroutines.delay
 @Composable
 fun LoginScreen(navController: NavController) {
 
-    val auth = FirebaseAuth.getInstance()
-    val db = FirebaseFirestore.getInstance()
+    val isPreview = LocalInspectionMode.current
+
+    val auth = if (isPreview) null else FirebaseAuth.getInstance()
+    val db = if (isPreview) null else FirebaseFirestore.getInstance()
+
 
     var role by remember { mutableStateOf<String?>(null) }
     var email by remember { mutableStateOf("") }
@@ -42,16 +51,14 @@ fun LoginScreen(navController: NavController) {
     var loading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf("") }
 
-    // STEP 1 — ROLE SELECTION
     if (role == null) {
         RoleSelectionScreen { role = it }
         return
     }
 
-    // STEP 2 — LOGIN UI
     Box(modifier = Modifier.fillMaxSize()) {
 
-        HeroImageSlider()
+        HeroImageSlider(previewMode = false)
 
         Column(
             modifier = Modifier
@@ -63,18 +70,18 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(170.dp))
 
-            // LOGO
             Box(
                 modifier = Modifier
                     .size(110.dp)
-                    .clip(CircleShape)
-                    .background(Color.White),
-                contentAlignment = Alignment.Center
+
             ) {
-                AsyncImage(
-                    model = R.drawable.logo01,
-                    contentDescription = null,
-                    modifier = Modifier.size(80.dp)
+                Image(
+                    painter = painterResource(id = R.drawable.logo01),
+                    contentDescription = "App Logo",
+                    modifier = Modifier
+                        .size(240.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .border(7.5.dp, Color(0xFF0A9AD9), RoundedCornerShape(100.dp))
                 )
             }
 
@@ -85,7 +92,6 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // LOGIN CARD
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
@@ -94,7 +100,7 @@ fun LoginScreen(navController: NavController) {
                 Column(modifier = Modifier.padding(20.dp)) {
 
                     if (errorMsg.isNotEmpty()) {
-                        Text(errorMsg, color = Color.Red, fontSize = 14.sp)
+                        Text(errorMsg, color = Color.Red)
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
@@ -102,8 +108,6 @@ fun LoginScreen(navController: NavController) {
                         value = email,
                         onValueChange = { email = it },
                         label = { Text("Email") },
-                        singleLine = true,
-                        shape = RoundedCornerShape(14.dp),
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -113,8 +117,6 @@ fun LoginScreen(navController: NavController) {
                         value = password,
                         onValueChange = { password = it },
                         label = { Text("Password") },
-                        singleLine = true,
-                        shape = RoundedCornerShape(14.dp),
                         visualTransformation =
                             if (showPassword) VisualTransformation.None
                             else PasswordVisualTransformation(),
@@ -145,7 +147,6 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // LOGIN BUTTON
             Button(
                 onClick = {
                     if (loading) return@Button
@@ -157,50 +158,25 @@ fun LoginScreen(navController: NavController) {
                     loading = true
                     errorMsg = ""
 
-                    auth.signInWithEmailAndPassword(email, password)
-                        .addOnSuccessListener { result ->
+                    auth?.signInWithEmailAndPassword(email, password)
+                        ?.addOnSuccessListener { result ->
                             val uid = result.user!!.uid
 
-                            db.collection("users").document(uid).get()
-                                .addOnSuccessListener { doc ->
+                            db?.collection("users")?.document(uid)?.get()
+                                ?.addOnSuccessListener { doc ->
                                     loading = false
                                     val userRole = doc.getString("role")?.lowercase()
 
                                     when (userRole) {
-                                        "admin" -> {
-                                            errorMsg =
-                                                "Admin access is temporarily unavailable."
-                                            auth.signOut()
-                                        }
-
-                                        "provider" -> {
-                                            if (role != "provider") {
-                                                errorMsg =
-                                                    "This is a provider account. Select Provider login."
-                                                auth.signOut()
-                                                return@addOnSuccessListener
-                                            }
-                                            navController.navigate(Routes.HomeScreen.route)
-                                        }
-
-                                        "user" -> {
-                                            if (role != "user") {
-                                                errorMsg =
-                                                    "This is a user account. Select User login."
-                                                auth.signOut()
-                                                return@addOnSuccessListener
-                                            }
-                                            navController.navigate(Routes.HomeScreen.route)
-                                        }
-
+                                        role -> navController.navigate(Routes.HomeScreen.route)
                                         else -> {
-                                            errorMsg = "Unknown account type"
+                                            errorMsg = "Wrong role selected"
                                             auth.signOut()
                                         }
                                     }
                                 }
                         }
-                        .addOnFailureListener {
+                        ?.addOnFailureListener {
                             loading = false
                             errorMsg = it.message ?: "Login failed"
                         }
@@ -209,10 +185,7 @@ fun LoginScreen(navController: NavController) {
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(28.dp),
-                enabled = !loading,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0A9AD9)
-                )
+                enabled = !loading
             ) {
                 if (loading) {
                     CircularProgressIndicator(
@@ -234,7 +207,7 @@ fun LoginScreen(navController: NavController) {
             Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                 AsyncImage(R.drawable.gmail, null, Modifier.size(42.dp))
                 AsyncImage(R.drawable.fb, null, Modifier.size(42.dp))
-                AsyncImage(R.drawable.tiktok, null, Modifier.size(42.dp))
+                AsyncImage(R.drawable.ticktok, null, Modifier.size(42.dp))
                 AsyncImage(R.drawable.instagram, null, Modifier.size(42.dp))
             }
 
@@ -242,12 +215,26 @@ fun LoginScreen(navController: NavController) {
 
             TextButton(onClick = {
                 navController.navigate(Routes.SignupScreen.route)
-            }) {
+            })
+            {
                 Text(
-                    "Don’t have an account? Sign Up",
-                    color = Color(0xFF0A9AD9),
-                    fontWeight = FontWeight.Bold
+                    buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(color = Color.Gray)
+                        ) {
+                            append("Don’t have an account? ")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color(0xFF0A9AD9),
+                                fontWeight = FontWeight.Bold
+                            )
+                        ) {
+                            append("Sign Up")
+                        }
+                    }
                 )
+
             }
         }
     }
@@ -257,7 +244,7 @@ fun LoginScreen(navController: NavController) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HeroImageSlider() {
+fun HeroImageSlider(previewMode: Boolean) {
 
     val images = listOf(
         R.drawable.total_1,
@@ -267,52 +254,29 @@ fun HeroImageSlider() {
 
     val pagerState = rememberPagerState { images.size }
 
-    // AUTO SLIDE
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(4000)
-            pagerState.animateScrollToPage(
-                (pagerState.currentPage + 1) % images.size
-            )
-        }
-    }
-
-    Box {
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(240.dp)
-        ) { page ->
-            AsyncImage(
-                model = images[page],
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
-
-        // DOT INDICATORS
-        Row(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            repeat(images.size) { index ->
-                Box(
-                    modifier = Modifier
-                        .size(if (pagerState.currentPage == index) 10.dp else 8.dp)
-                        .clip(CircleShape)
-                        .background(
-                            if (pagerState.currentPage == index)
-                                Color.White
-                            else
-                                Color.White.copy(alpha = 0.5f)
-                        )
+    if (!previewMode) {
+        LaunchedEffect(Unit) {
+            while (true) {
+                delay(4000)
+                pagerState.animateScrollToPage(
+                    (pagerState.currentPage + 1) % images.size
                 )
             }
         }
+    }
+
+    HorizontalPager(
+        state = pagerState,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(190.dp)
+    ) { page ->
+        AsyncImage(
+            model = images[page],
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
     }
 }
 
@@ -331,15 +295,46 @@ fun RoleSelectionScreen(onSelect: (String) -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Login As", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { onSelect("user") }, modifier = Modifier.fillMaxWidth()) {
-                    Text("👤 User Login")
+
+                Button(
+                    onClick = { onSelect("user") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF0A9AD9), // button color
+                        contentColor = Color.White          // text color
+                    ))
+
+                {
+                    Text("User")
                 }
+
                 Spacer(modifier = Modifier.height(12.dp))
-                Button(onClick = { onSelect("provider") }, modifier = Modifier.fillMaxWidth()) {
-                    Text("🛠 Provider Login")
+
+                Button(
+                    onClick = { onSelect("Provider") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF0A9AD9), // button color
+                        contentColor = Color.White          // text color
+                    )
+                ) {
+                    Text("Provider")
                 }
+
             }
         }
     }
 }
+
+/* ================= PREVIEW ================= */
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+
+    LoginScreen(navController = rememberNavController())
+}
+
+

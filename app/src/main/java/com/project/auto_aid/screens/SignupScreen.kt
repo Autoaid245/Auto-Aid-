@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,7 +33,6 @@ fun SignupScreen(navController: NavController) {
     val auth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
 
-    // ================= STATES =================
     var role by remember { mutableStateOf<String?>(null) }
 
     var name by remember { mutableStateOf("") }
@@ -58,18 +58,15 @@ fun SignupScreen(navController: NavController) {
             else -> "Medium"
         }
 
-    // ================= ROLE SELECTION =================
     if (role == null) {
         RoleSelection { role = it }
         return
     }
 
-    // ================= RESPONSIVE LAYOUT =================
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val isMobile = maxWidth < 600.dp
 
         if (isMobile) {
-            // ================= MOBILE =================
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -126,10 +123,8 @@ fun SignupScreen(navController: NavController) {
             }
 
         } else {
-            // ================= TABLET / DESKTOP =================
             Row(modifier = Modifier.fillMaxSize()) {
 
-                // LEFT PANEL
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -145,13 +140,9 @@ fun SignupScreen(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Welcome", color = Color.White, fontSize = 28.sp)
-                    Text(
-                        "Fast help at your location.",
-                        color = Color.White.copy(0.8f)
-                    )
+                    Text("Fast help at your location.", color = Color.White.copy(0.8f))
                 }
 
-                // RIGHT PANEL
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -396,4 +387,39 @@ fun signup(
             setLoading(false)
             Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
         }
+}
+
+/* ================= PREVIEWS (ADDED ONLY) ================= */
+
+@Preview(showBackground = true)
+@Composable
+fun RoleSelectionPreview() {
+    RoleSelection(onSelect = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SignupFormPreview() {
+    SignupForm(
+        role = "USER",
+        name = "John Doe",
+        email = "john@example.com",
+        phone = "0700123456",
+        password = "Password@1",
+        confirmPassword = "Password@1",
+        showPassword = false,
+        showConfirm = false,
+        passwordStrength = "Strong",
+        businessType = "",
+        loading = false,
+        onNameChange = {},
+        onEmailChange = {},
+        onPhoneChange = {},
+        onPasswordChange = {},
+        onConfirmChange = {},
+        togglePassword = {},
+        toggleConfirm = {},
+        onBusinessTypeChange = {},
+        onSubmit = {}
+    )
 }
