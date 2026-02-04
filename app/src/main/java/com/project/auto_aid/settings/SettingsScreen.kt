@@ -2,6 +2,7 @@ package com.project.auto_aid.settings
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -9,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -120,9 +122,12 @@ fun SettingsScreenUI(
                     Row(verticalAlignment = Alignment.CenterVertically) {
 
                         Image(
-                            painter = painterResource(R.drawable.logo01),
-                            contentDescription = "Profile",
-                            modifier = Modifier.size(75.dp).clip(CircleShape)
+                            painter = painterResource(id = R.drawable.logo01),
+                            contentDescription = "App Logo",
+                            modifier = Modifier
+                                .size(70.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                                .border(4.5.dp, Color(0xFF0A9AD9), RoundedCornerShape(100.dp))
                         )
 
                         Spacer(modifier = Modifier.width(15.dp))
@@ -139,7 +144,7 @@ fun SettingsScreenUI(
                             Text(email, fontSize = 16.sp, color = Color.Gray)
                         }
                     }
-
+                    Spacer(modifier = Modifier.width(100.dp))
                     Text(">", fontSize = 28.sp, color = Color.Gray)
                 }
             }
@@ -156,7 +161,7 @@ fun SettingsScreenUI(
                     MenuItem("Payment Methods", R.drawable.payment)
                     MenuItem("Wallet Settings", R.drawable.wallet)
                     MenuItem("Contact Us", R.drawable.contact)
-                    MenuItem("About", R.drawable.about)
+                    MenuItem("About Us", R.drawable.about)
                 }
             }
 
@@ -165,10 +170,17 @@ fun SettingsScreenUI(
             // LOGOUT
             Button(
                 onClick = onLogoutClick,
-                modifier = Modifier.fillMaxWidth().height(55.dp),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("Logout", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White
+                )
+            )
+            {
+                Text("Sign Out", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
         }
     }
