@@ -2,7 +2,7 @@ package com.project.auto_aid.navigation
 
 sealed class Routes(val route: String) {
 
-    // ================= SPLASH & ONBOARDING =================
+    // ================= SPLASH & ONBOARD =================
     object SplashScreen : Routes("splash")
     object OnBoardScreen : Routes("onboard_screen")
 
@@ -13,40 +13,38 @@ sealed class Routes(val route: String) {
     object VerifyCodeScreen : Routes("verify_code")
     object ResetPasswordScreen : Routes("reset_password")
 
-    // ================= MAIN APP =================
+    // ================= MAIN =================
     object HomeScreen : Routes("home")
     object SettingsScreen : Routes("settings_screen")
-    object UserInfoScreen : Routes("user_info_screen")
-    object IDVerificationScreen : Routes("id_verification_screen")
 
-    // ================= GARAGE FLOW =================
+    // ✅ PROFILE (INCLUDES ID VERIFICATION FLOW)
+    object UserInfoScreen : Routes("user_info_screen")
+
+    // ================= GARAGE =================
     object GarageScreen : Routes("garage")
     object GarageRequestScreen : Routes("garage_request")
-
-    // ⏳ Searching for mechanic
     object RequestProcessingScreen : Routes("request_processing")
-
-    // 👨‍🔧 Mechanic assigned
     object MechanicAssignedScreen : Routes("mechanic_assigned")
-
-    // ✅ Help completed
     object HelpCompletedScreen : Routes("help_completed")
 
-    // ================= 🚨 TOWING FLOW =================
+    // ================= TOWING =================
     object TowingScreen : Routes("towing")
     object TowingRequestScreen : Routes("towing_request")
     object TowingHistoryScreen : Routes("towing_history")
     object TowingActiveScreen : Routes("towing_active")
 
-    // ================= ⛽ FUEL FLOW =================
+    // ================= FUEL =================
     object FuelScreen : Routes("fuel")
     object FuelRequestScreen : Routes("fuel_request")
     object FuelActiveScreen : Routes("fuel_active")
     object FuelHistoryScreen : Routes("fuel_history")
 
-    // ================= 🚑 AMBULANCE =================
+    // ================= AMBULANCE =================
     object AmbulanceScreen : Routes("ambulance")
     object AmbulanceRequestScreen : Routes("ambulance_request")
     object AmbulanceStatusScreen : Routes("ambulance_status")
     object AmbulanceHistoryScreen : Routes("ambulance_history")
+    object PromotionScreen : Routes("promotion_screen")
+    object PayoutInformationScreen : Routes("payout_information")
+    object AboutUsScreen : Routes("about_us_screen")
 }

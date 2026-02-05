@@ -1,26 +1,33 @@
 package com.project.auto_aid.navigation
 
 import AmbulanceActiveScreen
-import TowingScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.project.auto_aid.model.OnBoardScreen
+
+// ================= SPLASH & ONBOARD =================
 import com.project.auto_aid.model.SplashScreen
+import com.project.auto_aid.model.OnBoardScreen
+
+// ================= AUTH =================
 import com.project.auto_aid.screens.*
-import com.project.auto_aid.screens.ambulance.AmbulanceHistoryScreen
-import com.project.auto_aid.screens.ambulance.AmbulanceRequestScreen
-import com.project.auto_aid.screens.ambulance.AmbulanceScreen
-import com.project.auto_aid.screens.fuel.FuelActiveScreen
-import com.project.auto_aid.screens.fuel.FuelHistoryScreen
-import com.project.auto_aid.screens.fuel.FuelRequestScreen
-import com.project.auto_aid.screens.fuel.FuelScreen
-import com.project.auto_aid.screens.garage.*
-import com.project.auto_aid.screens.towing.*
-import com.project.auto_aid.selectDocument.SelectDocumentScreen
-import com.project.auto_aid.settings.IDVerificationScreen
+
+// ================= SETTINGS =================
 import com.project.auto_aid.settings.SettingsScreen
+
+// ================= GARAGE =================
+import com.project.auto_aid.screens.garage.*
+
+// ================= TOWING =================
+import com.project.auto_aid.screens.towing.*
+
+// ================= FUEL =================
+import com.project.auto_aid.screens.fuel.*
+
+// ================= AMBULANCE =================
+import com.project.auto_aid.screens.ambulance.*
+import com.project.auto_aid.settings.AboutUsScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -30,7 +37,6 @@ fun AppNavigation(navController: NavHostController) {
         startDestination = Routes.SplashScreen.route
     ) {
 
-        // ================= SPLASH & ONBOARD =================
         composable(Routes.SplashScreen.route) {
             SplashScreen(navController)
         }
@@ -39,7 +45,6 @@ fun AppNavigation(navController: NavHostController) {
             OnBoardScreen(navController)
         }
 
-        // ================= AUTH =================
         composable(Routes.LoginScreen.route) {
             LoginScreen(navController)
         }
@@ -60,7 +65,6 @@ fun AppNavigation(navController: NavHostController) {
             ResetPasswordScreen(navController)
         }
 
-        // ================= MAIN =================
         composable(Routes.HomeScreen.route) {
             HomeScreen(navController)
         }
@@ -73,15 +77,6 @@ fun AppNavigation(navController: NavHostController) {
             UserInfoScreen(navController)
         }
 
-        composable(Routes.IDVerificationScreen.route) {
-            IDVerificationScreen(navController)
-        }
-
-        composable("select_document_screen") {
-            SelectDocumentScreen(navController)
-        }
-
-        // ================= GARAGE FLOW =================
         composable(Routes.GarageScreen.route) {
             GarageScreen(navController)
         }
@@ -102,7 +97,6 @@ fun AppNavigation(navController: NavHostController) {
             HelpCompletedScreen(navController)
         }
 
-        // ================= 🚨 TOWING FLOW =================
         composable(Routes.TowingScreen.route) {
             TowingScreen(navController)
         }
@@ -118,7 +112,7 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.TowingActiveScreen.route) {
             TowingActiveScreen(navController)
         }
-        // ================= ⛽ FUEL FLOW =================
+
         composable(Routes.FuelScreen.route) {
             FuelScreen(navController)
         }
@@ -134,6 +128,7 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.FuelHistoryScreen.route) {
             FuelHistoryScreen(navController)
         }
+
         composable(Routes.AmbulanceScreen.route) {
             AmbulanceScreen(navController)
         }
@@ -149,7 +144,19 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.AmbulanceHistoryScreen.route) {
             AmbulanceHistoryScreen(navController)
         }
-
+        composable(Routes.PromotionScreen.route) {
+            PromotionScreen(navController)
+        }
+        composable(Routes.PayoutInformationScreen.route) {
+            PayoutInformationScreen(navController)
+        }
+        composable(Routes.AboutUsScreen.route) {
+            AboutUsScreen(navController)
+        }
     }
+}
 
+@Composable
+fun TowingScreen(x0: NavHostController) {
+    TODO("Not yet implemented")
 }
