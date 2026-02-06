@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.project.auto_aid"
-        minSdk = 26
+        minSdk = 29
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -55,6 +55,12 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
 
 
+    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation("androidx.compose.foundation:foundation")
+    implementation("com.google.accompanist:accompanist-pager:0.36.0")
+
+
+
     // Jetpack Compose (using BOM - Bill of Materials)
     implementation(platform(libs.androidx.compose.bom))
 
@@ -88,6 +94,9 @@ dependencies {
 
     // Other Dependencies
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation(libs.inputmapping)
+    implementation(libs.androidx.remote.creation.compose)
 
     // Testing
     testImplementation(libs.junit)
