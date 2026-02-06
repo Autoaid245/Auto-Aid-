@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.project.auto_aid.navigation.Routes
 import kotlinx.coroutines.launch
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun OnBoardScreen(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -88,7 +90,7 @@ fun OnBoardScreen(navController: NavHostController, modifier: Modifier = Modifie
                     contentDescription = model.title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(650.dp)
+                        .weight(0.65f)
                         .clip(RoundedCornerShape(37.dp)),
                     contentScale = ContentScale.Crop
                 )
@@ -166,3 +168,12 @@ fun AuthenticationButton(title: String, onClick: () -> Unit) {
         )
     }
 }
+
+@Preview(showBackground = true, device = "spec:width=360dp,height=640dp")
+@Composable
+fun OnBoardScreenPreview() {
+    val navController = rememberNavController()
+    OnBoardScreen(navController = navController)
+}
+
+
