@@ -30,6 +30,7 @@ import com.project.auto_aid.R
 import com.project.auto_aid.navigation.Routes
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 
 /* ================= SIGNUP SCREEN ================= */
 
@@ -72,22 +73,24 @@ fun SignupScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(36.dp),
+//            .verticalScroll(rememberScrollState())
+            .padding(0.dp),
         horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
 
         HeroImageSlider()
 
-        Spacer(modifier = Modifier.height(6.dp))
+
+        Spacer(modifier = Modifier.height(7.dp))
 
         Text("Create Account", fontSize = 26.sp, fontWeight = FontWeight.Bold)
         Text("Fast help at your location", color = Color.Gray)
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             shape = RoundedCornerShape(15.dp),
             elevation = CardDefaults.cardElevation(12.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -104,46 +107,43 @@ fun SignupScreen(navController: NavController) {
                     isError = phone.isNotEmpty() && !isValidUgandaPhone(phone)
                 )
 
-                PasswordInput(
-                    label = "Password",
-                    value = password,
-                    show = showPassword,
-                    toggle = { showPassword = !showPassword }
-                ) { password = it }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        PasswordInput(
+                            label = "Password",
+                            value = password,
+                            show = showPassword,
+                            toggle = { showPassword = !showPassword }
+                        ) { password = it }
+                    }
 
-                PasswordInput(
-                    label = "Confirm Password",
-                    value = confirmPassword,
-                    show = showConfirm,
-                    toggle = { showConfirm = !showConfirm }
-                ) { confirmPassword = it }
-
-                if (password.isNotEmpty()) {
-                    Text(
-                        "$passwordStrength Password",
-                        fontWeight = FontWeight.Bold,
-                        color = when (passwordStrength) {
-                            "Strong" -> Color(0xFF2E7D32)
-                            "Medium" -> Color(0xFFF9A825)
-                            else -> Color.Red
-                        }
-                    )
+                    Box(modifier = Modifier.weight(1f)) {
+                        PasswordInput(
+                            label = "Confirm",
+                            value = confirmPassword,
+                            show = showConfirm,
+                            toggle = { showConfirm = !showConfirm }
+                        ) { confirmPassword = it }
+                    }
                 }
 
                 // ✅ NOW THESE SHOW CORRECTLY
-                if (role == "provider") {
+                if (role.equals("provider", ignoreCase = true)) {
 
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Dropdown(
                         label = "Service Type",
-                        options = listOf("garage", "fuel", "towing", "ambulance"),
+                        options = listOf("Garage", "Fuel", "Towing", "Ambulance"),
                         selected = businessType
                     ) { businessType = it }
 
                     Dropdown(
                         label = "Subscription",
-                        options = listOf("monthly", "quarterly", "yearly"),
+                        options = listOf("Monthly", "Quarterly", "Yearly"),
                         selected = subscription
                     ) { subscription = it }
                 }
@@ -175,7 +175,8 @@ fun SignupScreen(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(56.dp)
+                .padding(horizontal = 13.dp),
             shape = RoundedCornerShape(28.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF0A9AD9),
@@ -235,16 +236,20 @@ fun HeroImageSlider() {
         state = pagerState,
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(120.dp)
+            .fillMaxHeight(0.12f)
+
     ) { page ->
         AsyncImage(
             model = images[page],
             contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
     }
 }
+
+
 
 /* ================= COMPONENTS ================= */
 
@@ -307,6 +312,7 @@ fun PasswordInput(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Dropdown(
     label: String,
@@ -318,23 +324,35 @@ fun Dropdown(
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    Box {
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+
         OutlinedTextField(
             value = selected,
             onValueChange = {},
             readOnly = true,
             label = { Text(label) },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+            },
+
             modifier = Modifier
+                .menuAnchor()   // ⭐ THIS MAKES IT WORK
                 .fillMaxWidth()
-                .clickable { expanded = true }
         )
 
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            options.forEach {
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.background(Color(0xFFE3F2FD))
+        ) {
+            options.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(it) },
+                    text = { Text(option) },
                     onClick = {
-                        onSelect(it)
+                        onSelect(option)
                         expanded = false
                     }
                 )
@@ -414,7 +432,7 @@ fun toast(context: Context, msg: String) {
 
 /* ================= PREVIEW ================= */
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, device = "spec:width=360dp,height=640dp")
 @Composable
 fun SignupScreenPreview() {
     SignupScreen(navController = rememberNavController())
