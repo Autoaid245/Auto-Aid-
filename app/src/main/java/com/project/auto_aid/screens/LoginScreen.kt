@@ -2,6 +2,7 @@ package com.project.auto_aid.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,9 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -35,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -319,9 +319,26 @@ fun HeroImageSlider(previewMode: Boolean) {
 
 @Composable
 fun RoleSelectionScreen(onSelect: (String) -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center)
 
-    {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+
+        Image(
+            painter = painterResource(id = R.drawable.fuel),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize()
+                .blur(15.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White.copy(alpha = 0.1f))
+        )
+
         Card(
             modifier = Modifier.fillMaxWidth(0.85f),
             shape = RoundedCornerShape(24.dp),
@@ -332,7 +349,12 @@ fun RoleSelectionScreen(onSelect: (String) -> Unit) {
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Login As", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+
+                Text(
+                    text = "Login As",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -346,16 +368,14 @@ fun RoleSelectionScreen(onSelect: (String) -> Unit) {
                         containerColor = Color(0xFF0A9AD9),
                         contentColor = Color.White
                     )
-                )
-
-                {
+                ) {
                     Text("User")
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
-                    onClick = { onSelect("Provider") },
+                    onClick = { onSelect("provider") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(45.dp),
@@ -364,11 +384,9 @@ fun RoleSelectionScreen(onSelect: (String) -> Unit) {
                         containerColor = Color(0xFF0A9AD9),
                         contentColor = Color.White
                     )
-                )
-                {
+                ) {
                     Text("Service Provider")
                 }
-
             }
         }
     }

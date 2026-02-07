@@ -14,12 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -29,6 +26,9 @@ import kotlinx.coroutines.delay
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.res.painterResource
 
 /* ================= SIGNUP SCREEN ================= */
 
@@ -38,7 +38,6 @@ fun SignupScreen(navController: NavController) {
     val context = LocalContext.current
 
     var role by remember { mutableStateOf<String?>(null) }
-    var loading by remember { mutableStateOf(false) }
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -53,27 +52,27 @@ fun SignupScreen(navController: NavController) {
     var businessType by remember { mutableStateOf("") }
     var subscription by remember { mutableStateOf("monthly") }
 
-    // ✅ TERMS CHECK (ONLY ADDITION)
-    var acceptTerms by remember { mutableStateOf(false) }
-
+    // 🔹 ROLE SELECTION FIRST
     if (role == null) {
         RoleSelection { role = it }
         return
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        HeroImageSlider() // ✅ NOW DEFINED
+        HeroImageSlider()
 
         Spacer(modifier = Modifier.height(7.dp))
 
         Text("Create Account", fontSize = 26.sp, fontWeight = FontWeight.Bold)
         Text("Fast help at your location", color = Color.Gray)
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Card(
             modifier = Modifier
@@ -120,53 +119,34 @@ fun SignupScreen(navController: NavController) {
                 if (role.equals("provider", true)) {
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Dropdown(
-                        label = "Service Type",
-                        options = listOf("Garage", "Fuel", "Towing", "Ambulance"),
-                        selected = businessType
-                    ) { businessType = it }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Box(Modifier.weight(1f)) {
+                            Dropdown(
+                                label = "Service Type",
+                                options = listOf("Garage", "Fuel", "Towing", "Ambulance"),
+                                selected = businessType
+                            ) { businessType = it }
+                        }
 
-                    Dropdown(
-                        label = "Subscription",
-                        options = listOf("Monthly", "Quarterly", "Yearly"),
-                        selected = subscription
-                    ) { subscription = it }
+                        Box(Modifier.weight(1f)) {
+                            Dropdown(
+                                label = "Subscription",
+                                options = listOf("Monthly", "Quarterly", "Yearly"),
+                                selected = subscription
+                            ) { subscription = it }
+                        }
+                    }
                 }
             }
-        }
-
-        // ✅ TERMS UI
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = acceptTerms,
-                onCheckedChange = { acceptTerms = it }
-            )
-
-            Text("I agree to ")
-
-            Text(
-                text = "Terms & Conditions",
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF0A9AD9),
-                modifier = Modifier.clickable {
-                    navController.navigate("terms")
-                }
-            )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = {
-                if (!acceptTerms) {
-                    toast(context, "Please accept the Terms & Conditions")
-                    return@Button
-                }
 
                 if (name.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank()) {
                     toast(context, "Fill in all fields")
@@ -183,7 +163,8 @@ fun SignupScreen(navController: NavController) {
                     return@Button
                 }
 
-                toast(context, "Signup logic goes here")
+                // ✅ FIXED: CORRECT TERMS ROUTE
+                navController.navigate("terms_screen?fromSignup=true")
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -193,10 +174,12 @@ fun SignupScreen(navController: NavController) {
         ) {
             Text("Continue", fontSize = 18.sp)
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 
-/* ================= HERO IMAGE SLIDER (FIX) ================= */
+/* ================= HERO IMAGE SLIDER ================= */
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -238,66 +221,68 @@ fun HeroImageSlider() {
 
 @Composable
 fun RoleSelection(onSelect: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5)),
-        contentAlignment = Alignment.Center
-    ) {
-        Card(
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+
+        Image(
+            painter = painterResource(id = R.drawable.fuel),
+            contentDescription = null,
             modifier = Modifier
-                .fillMaxWidth(0.9f),
-            shape = RoundedCornerShape(20.dp),
-            elevation = CardDefaults.cardElevation(10.dp),
+                .fillMaxSize()
+                .blur(15.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White.copy(alpha = 0.1f))
+        )
+
+        Card(
+            modifier = Modifier.fillMaxWidth(0.85f),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text("Sign Up As", fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
-                Text(
-                    text = "Sign Up As",
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 20.dp)
-                )
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Button(
                     onClick = { onSelect("user") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF0A9AD9),
                         contentColor = Color.White
                     )
                 ) {
-                    Text("User", fontSize = 16.sp)
+                    Text("User")
                 }
 
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Button(
                     onClick = { onSelect("provider") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF0A9AD9),
                         contentColor = Color.White
                     )
                 ) {
-                    Text("Service Provider", fontSize = 16.sp)
+                    Text("Service Provider")
                 }
             }
         }
     }
 }
 
-/* ================= HELPERS ================= */
+/* ================= HELPERS & UTILS ================= */
 
 @Composable
 fun Input(label: String, value: String, onChange: (String) -> Unit) {
@@ -330,7 +315,9 @@ fun PasswordInput(
         label = { Text(label) },
         visualTransformation = if (show) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
-            Text(if (show) "🙈" else "👁️", modifier = Modifier.clickable { toggle() })
+            IconButton(onClick = toggle) {
+                Text(if (show) "🙈" else "👁️")
+            }
         },
         modifier = Modifier.fillMaxWidth()
     )
@@ -361,7 +348,7 @@ fun Dropdown(label: String, options: List<String>, selected: String, onSelect: (
     }
 }
 
-fun isValidUgandaPhone(phone: String) =
+fun isValidUgandaPhone(phone: String): Boolean =
     phone.length == 9 && listOf("70", "74", "75", "76", "77", "78").any { phone.startsWith(it) }
 
 fun toast(context: Context, msg: String) {
