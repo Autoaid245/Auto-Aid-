@@ -88,12 +88,11 @@ fun LoginScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(170.dp))
+            Spacer(modifier = Modifier.height(125.dp))
 
             Box(
                 modifier = Modifier
@@ -105,8 +104,10 @@ fun LoginScreen(navController: NavController) {
                     contentDescription = "App Logo",
                     modifier = Modifier
                         .size(440.dp)
+
                         .clip(RoundedCornerShape(20.dp))
-                        .border(7.5.dp, Color(0xFF0A9AD9), RoundedCornerShape(100.dp))
+                        .border(7.5.dp, Color(0xFF0A9AD9),
+                            RoundedCornerShape(100.dp))
                 )
             }
 
@@ -127,7 +128,8 @@ fun LoginScreen(navController: NavController) {
 
                     if (errorMsg.isNotEmpty()) {
                         Text(errorMsg, color = Color.Red)
-                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Spacer(modifier = Modifier.height(5.dp))
                     }
 
                     OutlinedTextField(
@@ -232,7 +234,7 @@ fun LoginScreen(navController: NavController) {
 
             Text("Or sign in with", color = Color.Gray)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(13.dp))
 
             Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                 AsyncImage(R.drawable.gmail, null, Modifier.size(42.dp))
@@ -241,7 +243,7 @@ fun LoginScreen(navController: NavController) {
                 AsyncImage(R.drawable.instagram, null, Modifier.size(42.dp))
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             TextButton(onClick = {
                 navController.navigate(Routes.SignupScreen.route)
@@ -301,7 +303,8 @@ fun HeroImageSlider(previewMode: Boolean) {
         state = pagerState,
         modifier = Modifier
             .fillMaxWidth()
-            .height(190.dp)
+            .height(180.dp)
+
     ) { page ->
         AsyncImage(
             model = images[page],
@@ -316,7 +319,9 @@ fun HeroImageSlider(previewMode: Boolean) {
 
 @Composable
 fun RoleSelectionScreen(onSelect: (String) -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center)
+
+    {
         Card(
             modifier = Modifier.fillMaxWidth(0.85f),
             shape = RoundedCornerShape(24.dp),
