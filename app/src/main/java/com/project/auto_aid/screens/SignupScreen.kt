@@ -31,6 +31,9 @@ import com.project.auto_aid.navigation.Routes
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.res.painterResource
 
 /* ================= SIGNUP SCREEN ================= */
 
@@ -87,7 +90,7 @@ fun SignupScreen(navController: NavController) {
         Text("Create Account", fontSize = 26.sp, fontWeight = FontWeight.Bold)
         Text("Fast help at your location", color = Color.Gray)
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Card(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -135,17 +138,26 @@ fun SignupScreen(navController: NavController) {
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Dropdown(
-                        label = "Service Type",
-                        options = listOf("Garage", "Fuel", "Towing", "Ambulance"),
-                        selected = businessType
-                    ) { businessType = it }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            Dropdown(
+                                label = "Service Type",
+                                options = listOf("Garage", "Fuel", "Towing", "Ambulance"),
+                                selected = businessType
+                            ) { businessType = it }
+                        }
 
-                    Dropdown(
-                        label = "Subscription",
-                        options = listOf("Monthly", "Quarterly", "Yearly"),
-                        selected = subscription
-                    ) { subscription = it }
+                        Box(modifier = Modifier.weight(1f)) {
+                            Dropdown(
+                                label = "Subscription",
+                                options = listOf("Monthly", "Quarterly", "Yearly"),
+                                selected = subscription
+                            ) { subscription = it }
+                        }
+                    }
                 }
             }
         }
@@ -366,12 +378,29 @@ fun Dropdown(
 @Composable
 fun RoleSelection(onSelect: (String) -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+
+        Image(
+            painter = painterResource(id = R.drawable.fuel),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize()
+                .blur(15.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White.copy(alpha = 0.1f))
+        )
+
         Card(
             modifier = Modifier.fillMaxWidth(0.85f),
             shape = RoundedCornerShape(24.dp),
             elevation = CardDefaults.cardElevation(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
+
+
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
