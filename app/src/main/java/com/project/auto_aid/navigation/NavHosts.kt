@@ -1,10 +1,11 @@
 package com.project.auto_aid.navigation
 
-import AmbulanceActiveScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
 // ================= SPLASH & ONBOARD =================
 import com.project.auto_aid.model.SplashScreen
@@ -14,7 +15,7 @@ import com.project.auto_aid.model.OnBoardScreen
 import com.project.auto_aid.screens.*
 
 // ================= SETTINGS =================
-import com.project.auto_aid.settings.SettingsScreen
+import com.project.auto_aid.settings.*
 
 // ================= GARAGE =================
 import com.project.auto_aid.screens.garage.*
@@ -27,7 +28,6 @@ import com.project.auto_aid.screens.fuel.*
 
 // ================= AMBULANCE =================
 import com.project.auto_aid.screens.ambulance.*
-import com.project.auto_aid.settings.AboutUsScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -37,6 +37,7 @@ fun AppNavigation(navController: NavHostController) {
         startDestination = Routes.SplashScreen.route
     ) {
 
+        // ===== SPLASH & ONBOARD =====
         composable(Routes.SplashScreen.route) {
             SplashScreen(navController)
         }
@@ -45,6 +46,7 @@ fun AppNavigation(navController: NavHostController) {
             OnBoardScreen(navController)
         }
 
+        // ===== AUTH =====
         composable(Routes.LoginScreen.route) {
             LoginScreen(navController)
         }
@@ -65,6 +67,7 @@ fun AppNavigation(navController: NavHostController) {
             ResetPasswordScreen(navController)
         }
 
+        // ===== MAIN =====
         composable(Routes.HomeScreen.route) {
             HomeScreen(navController)
         }
@@ -77,6 +80,7 @@ fun AppNavigation(navController: NavHostController) {
             UserInfoScreen(navController)
         }
 
+        // ===== GARAGE =====
         composable(Routes.GarageScreen.route) {
             GarageScreen(navController)
         }
@@ -97,6 +101,7 @@ fun AppNavigation(navController: NavHostController) {
             HelpCompletedScreen(navController)
         }
 
+        // ===== TOWING =====
         composable(Routes.TowingScreen.route) {
             TowingScreen(navController)
         }
@@ -105,14 +110,15 @@ fun AppNavigation(navController: NavHostController) {
             TowingRequestScreen(navController)
         }
 
-        composable(Routes.TowingHistoryScreen.route) {
-            TowingHistoryScreen(navController)
-        }
-
         composable(Routes.TowingActiveScreen.route) {
             TowingActiveScreen(navController)
         }
 
+        composable(Routes.TowingHistoryScreen.route) {
+            TowingHistoryScreen(navController)
+        }
+
+        // ===== FUEL =====
         composable(Routes.FuelScreen.route) {
             FuelScreen(navController)
         }
@@ -129,6 +135,7 @@ fun AppNavigation(navController: NavHostController) {
             FuelHistoryScreen(navController)
         }
 
+        // ===== AMBULANCE =====
         composable(Routes.AmbulanceScreen.route) {
             AmbulanceScreen(navController)
         }
@@ -144,19 +151,40 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.AmbulanceHistoryScreen.route) {
             AmbulanceHistoryScreen(navController)
         }
-        composable(Routes.PromotionScreen.route) {
-            PromotionScreen(navController)
-        }
-        composable(Routes.PayoutInformationScreen.route) {
-            PayoutInformationScreen(navController)
-        }
+
+        // ===== LEGAL & INFO =====
         composable(Routes.AboutUsScreen.route) {
             AboutUsScreen(navController)
         }
-    }
-}
 
-@Composable
-fun TowingScreen(x0: NavHostController) {
-    TODO("Not yet implemented")
+        composable(
+            route = Routes.TermsAndConditionsScreen.routeWithArgs,
+            arguments = listOf(
+                navArgument("fromSignup") {
+                    type = NavType.BoolType
+                    defaultValue = false
+                }
+            )
+        ) { backStackEntry ->
+            val fromSignup =
+                backStackEntry.arguments?.getBoolean("fromSignup") ?: false
+
+            TermsAndConditionsScreen(
+                navController = navController,
+                fromSignup = fromSignup
+            )
+        }
+
+        composable(Routes.PrivacyPolicyScreen.route) {
+            PrivacyPolicyScreen(navController)
+        }
+
+        composable(Routes.PromotionScreen.route) {
+            PromotionScreen(navController)
+        }
+
+        composable(Routes.PayoutInformationScreen.route) {
+            PayoutInformationScreen(navController)
+        }
+    }
 }

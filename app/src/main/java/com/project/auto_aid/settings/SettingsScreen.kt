@@ -75,13 +75,26 @@ fun SettingsScreen(navController: NavHostController) {
             SectionTitle("Information")
 
             SectionCard {
+
                 SettingsRow(
                     title = "Version",
                     icon = Icons.Default.PhoneAndroid,
                     trailingText = "1.0.0"
                 )
-                SettingsRow("Terms of Service", Icons.Default.Description)
-                SettingsRow("Privacy Policy", Icons.Default.Security)
+
+                SettingsRow(
+                    title = "Terms of Service",
+                    icon = Icons.Default.Description
+                ) {
+                    navController.navigate(Routes.TermsAndConditionsScreen.route)
+                }
+
+                SettingsRow(
+                    title = "Privacy Policy",
+                    icon = Icons.Default.Security
+                ) {
+                    navController.navigate(Routes.PrivacyPolicyScreen.route)
+                }
             }
 
             Spacer(modifier = Modifier.height(32.dp))

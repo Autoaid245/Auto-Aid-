@@ -17,7 +17,7 @@ sealed class Routes(val route: String) {
     object HomeScreen : Routes("home")
     object SettingsScreen : Routes("settings_screen")
 
-    // ✅ PROFILE (INCLUDES ID VERIFICATION FLOW)
+    // ================= PROFILE =================
     object UserInfoScreen : Routes("user_info_screen")
 
     // ================= GARAGE =================
@@ -30,8 +30,8 @@ sealed class Routes(val route: String) {
     // ================= TOWING =================
     object TowingScreen : Routes("towing")
     object TowingRequestScreen : Routes("towing_request")
-    object TowingHistoryScreen : Routes("towing_history")
     object TowingActiveScreen : Routes("towing_active")
+    object TowingHistoryScreen : Routes("towing_history")
 
     // ================= FUEL =================
     object FuelScreen : Routes("fuel")
@@ -44,7 +44,15 @@ sealed class Routes(val route: String) {
     object AmbulanceRequestScreen : Routes("ambulance_request")
     object AmbulanceStatusScreen : Routes("ambulance_status")
     object AmbulanceHistoryScreen : Routes("ambulance_history")
+
+    // ================= LEGAL & INFO =================
     object PromotionScreen : Routes("promotion_screen")
     object PayoutInformationScreen : Routes("payout_information")
     object AboutUsScreen : Routes("about_us_screen")
+
+    object TermsAndConditionsScreen : Routes("terms_and_conditions") {
+        const val routeWithArgs = "terms_and_conditions?fromSignup={fromSignup}"
+    }
+
+    object PrivacyPolicyScreen : Routes("privacy_policy")
 }

@@ -1,3 +1,4 @@
+package com.project.auto_aid.screens.towing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +28,7 @@ fun TowingScreen(navController: NavHostController) {
             .padding(20.dp)
     ) {
 
-        // ================= HEADER =================
+        // ===== HEADER =====
         Text(
             text = "Towing Service",
             style = MaterialTheme.typography.headlineSmall,
@@ -43,7 +44,7 @@ fun TowingScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        // ================= REQUEST TOW =================
+        // ===== REQUEST TOW =====
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,12 +66,9 @@ fun TowingScreen(navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
+                    Text("Request Tow", fontWeight = FontWeight.SemiBold)
                     Text(
-                        text = "Request Tow",
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "Get immediate towing assistance",
+                        "Get immediate towing assistance",
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.Gray
                     )
@@ -80,7 +78,7 @@ fun TowingScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ================= ACTIVE REQUEST =================
+        // ===== ACTIVE REQUEST =====
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,12 +100,9 @@ fun TowingScreen(navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
+                    Text("Active Request", fontWeight = FontWeight.SemiBold)
                     Text(
-                        text = "Active Request",
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "Track your ongoing tow",
+                        "Track your ongoing tow",
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.Gray
                     )
@@ -117,7 +112,7 @@ fun TowingScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ================= HISTORY =================
+        // ===== HISTORY =====
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,12 +134,9 @@ fun TowingScreen(navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
+                    Text("Towing History", fontWeight = FontWeight.SemiBold)
                     Text(
-                        text = "Towing History",
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "View past towing requests",
+                        "View past towing requests",
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.Gray
                     )
@@ -154,12 +146,12 @@ fun TowingScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // ================= BACK =================
+        // ===== BACK =====
         OutlinedButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("← Back")
+            Text("Back")
         }
     }
 }
