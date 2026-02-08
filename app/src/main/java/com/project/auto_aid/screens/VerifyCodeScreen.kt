@@ -43,7 +43,7 @@ fun VerifyCodeScreen(navController: NavController) {
             modifier = Modifier
                 .clickable { navController.navigateUp() }
         ) {
-            Text("←", fontSize = 20.sp, color = Color(0xFF0A9AD9))
+            Text("", fontSize = 20.sp, color = Color(0xFF0A9AD9))
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = "Back",
@@ -98,7 +98,30 @@ fun VerifyCodeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(32.dp))
 
         // Verify Button
-        navController.navigate(Routes.ResetPasswordScreen.route)
+        Button(
+            onClick = {
+                if (isCodeValid) {
+                    navController.navigate(Routes.ResetPasswordScreen.route)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Enter a valid 6-digit code",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            enabled = isCodeValid,
+            shape = RoundedCornerShape(28.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF0A9AD9),
+                contentColor = Color.White
+            )
+        ) {
+            Text("Verify", fontSize = 18.sp)
+        }
 
 
 
