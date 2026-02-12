@@ -17,16 +17,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.project.auto_aid.provider.model.Provider
-
-/* ---------- COLORS ---------- */
-val BackgroundSoft = Color(0xFFF6F8FB)
-val TextPrimary = Color(0xFF1A1A1A)
-val TextSecondary = Color(0xFF7A7A7A)
 
 @Composable
 fun ProviderProfileCard(
@@ -48,23 +41,18 @@ fun ProviderProfileCard(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(26.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        shape = RoundedCornerShape(22.dp),
+        elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Column {
 
-            /* ---------- HEADER ---------- */
+            /* ---------------- HEADER GRADIENT ---------------- */
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        Brush.verticalGradient(
-                            listOf(
-                                serviceColor.copy(alpha = 0.20f),
-                                serviceColor.copy(alpha = 0.08f),
-                                Color.Transparent
-                            )
+                        Brush.horizontalGradient(
+                            listOf(serviceColor.copy(.15f), Color.White)
                         )
                     )
                     .padding(16.dp)
@@ -80,17 +68,15 @@ fun ProviderProfileCard(
                                 model = provider.profileImageUrl,
                                 contentDescription = "Profile",
                                 modifier = Modifier
-                                    .size(74.dp)
-                                    .padding(2.dp)
+                                    .size(72.dp)
                                     .clip(CircleShape)
-                                    .border(2.dp, serviceColor.copy(.7f), CircleShape)
-                                    .background(Color.White, CircleShape)
+                                    .border(3.dp, serviceColor, CircleShape)
                                     .clickable { onChangeProfileImage() }
                             )
                         } else {
                             Box(
                                 modifier = Modifier
-                                    .size(74.dp)
+                                    .size(72.dp)
                                     .clip(CircleShape)
                                     .background(Color.LightGray)
                                     .clickable { onChangeProfileImage() },
@@ -100,7 +86,7 @@ fun ProviderProfileCard(
                             }
                         }
 
-                        /* CAMERA ICON */
+                        /* CAMERA BADGE */
                         Box(
                             modifier = Modifier
                                 .size(24.dp)
@@ -117,39 +103,41 @@ fun ProviderProfileCard(
 
                     Column(modifier = Modifier.weight(1f)) {
 
-                        /* NAME + VERIFIED */
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
 
                             Text(
                                 provider.name,
-                                style = MaterialTheme.typography.titleLarge,
-                                color = TextPrimary,
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = 0.2.sp,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.weight(1f)
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
                             )
 
-                            Spacer(Modifier.width(6.dp))
+                            Spacer(Modifier.width(8.dp))
 
-                            VerifiedBadge()
+                            /* VERTICAL VERIFIED BADGE */
+                            Column(
+                                modifier = Modifier
+                                    .background(Color(0xFF4CAF50), RoundedCornerShape(6.dp))
+                                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                            ) {
+                                Text("✔", color = Color.White)
+                                Text("VER", color = Color.White, style = MaterialTheme.typography.labelSmall)
+                            }
                         }
 
                         Text(
                             provider.phone,
-                            color = TextSecondary,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
                         )
                     }
 
+                    TextButton(onClick = onEditProfile) {
+                        Text("Edit", color = serviceColor, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
 
-            /* ---------- STATUS ---------- */
+            /* ---------------- STATUS ROW ---------------- */
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -198,13 +186,14 @@ fun ProviderProfileCard(
 
             Divider()
 
-            /* ---------- STATS ---------- */
+            /* ---------------- STATS ---------------- */
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(14.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+
                 StatCard("Rating", "⭐ ${provider.rating}")
                 StatCard("Today", "UGX 45K")
                 StatCard("Week", "UGX 280K")
@@ -213,34 +202,19 @@ fun ProviderProfileCard(
     }
 }
 
-/* ---------- VERIFIED BADGE ---------- */
-@Composable
-fun VerifiedBadge() {
-    Row(
-        modifier = Modifier
-            .background(Color(0xFFE8F5E9), RoundedCornerShape(50))
-            .padding(horizontal = 8.dp, vertical = 3.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("✔", color = Color(0xFF2E7D32), fontWeight = FontWeight.Bold)
-        Spacer(Modifier.width(3.dp))
-        Text("Verified", color = Color(0xFF2E7D32), style = MaterialTheme.typography.labelSmall)
-    }
-}
-
-/* ---------- MINI STAT CARD ---------- */
+/* MINI STAT CARD */
 @Composable
 private fun StatCard(title: String, value: String) {
     Card(
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = BackgroundSoft)
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F7FA))
     ) {
         Column(
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(title, style = MaterialTheme.typography.labelSmall, color = TextSecondary)
-            Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = TextPrimary)
+            Text(title, style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+            Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
         }
     }
 }
