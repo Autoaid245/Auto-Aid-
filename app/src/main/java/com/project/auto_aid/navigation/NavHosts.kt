@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 // Splash & Onboard
 import com.project.auto_aid.model.SplashScreen
 import com.project.auto_aid.model.OnBoardScreen
+import com.project.auto_aid.settings.ConsentScreen
 
 // Auth
 import com.project.auto_aid.screens.LoginScreen
@@ -46,6 +47,7 @@ import com.project.auto_aid.screens.ambulance.*
 import com.project.auto_aid.provider.ui.ProviderDashboardScreen
 import com.project.auto_aid.provider.ui.ProviderActiveJobScreen
 import com.project.auto_aid.provider.ui.ProviderMapScreen
+import com.project.auto_aid.provider.ui.EditProviderProfileScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -59,6 +61,9 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.SplashScreen.route) {
             SplashScreen(navController)
         }
+        composable(Routes.ConsentScreen.route) {
+            ConsentScreen(navController)
+        }
         composable(Routes.OnBoardScreen.route) {
             OnBoardScreen(navController)
         }
@@ -67,15 +72,19 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.LoginScreen.route) {
             LoginScreen(navController)
         }
+
         composable(Routes.SignupScreen.route) {
             SignupScreen(navController)
         }
+
         composable(Routes.ForgotPasswordScreen.route) {
             ForgotPasswordScreen(navController)
         }
+
         composable(Routes.VerifyCodeScreen.route) {
             VerifyCodeScreen(navController)
         }
+
         composable(Routes.ResetPasswordScreen.route) {
             ResetPasswordScreen(navController)
         }
@@ -89,6 +98,7 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.SettingsScreen.route) {
             SettingsScreen(navController)
         }
+
         composable(Routes.UserInfoScreen.route) {
             IdentityVerificationScreen(navController)
         }
@@ -97,15 +107,19 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.GarageScreen.route) {
             GarageScreen(navController)
         }
+
         composable(Routes.GarageRequestScreen.route) {
             GarageRequestScreen(navController)
         }
+
         composable(Routes.RequestProcessingScreen.route) {
             RequestProcessingScreen(navController)
         }
+
         composable(Routes.MechanicAssignedScreen.route) {
             MechanicAssignedScreen(navController)
         }
+
         composable(Routes.HelpCompletedScreen.route) {
             HelpCompletedScreen(navController)
         }
@@ -114,12 +128,15 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.TowingScreen.route) {
             TowingScreen(navController)
         }
+
         composable(Routes.TowingRequestScreen.route) {
             TowingRequestScreen(navController)
         }
+
         composable(Routes.TowingActiveScreen.route) {
             TowingActiveScreen(navController)
         }
+
         composable(Routes.TowingHistoryScreen.route) {
             TowingHistoryScreen(navController)
         }
@@ -128,12 +145,15 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.FuelScreen.route) {
             FuelScreen(navController)
         }
+
         composable(Routes.FuelRequestScreen.route) {
             FuelRequestScreen(navController)
         }
+
         composable(Routes.FuelActiveScreen.route) {
             FuelActiveScreen(navController)
         }
+
         composable(Routes.FuelHistoryScreen.route) {
             FuelHistoryScreen(navController)
         }
@@ -142,12 +162,15 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.AmbulanceScreen.route) {
             AmbulanceScreen(navController)
         }
+
         composable(Routes.AmbulanceRequestScreen.route) {
             AmbulanceRequestScreen(navController)
         }
+
         composable(Routes.AmbulanceStatusScreen.route) {
             AmbulanceActiveScreen(navController)
         }
+
         composable(Routes.AmbulanceHistoryScreen.route) {
             AmbulanceHistoryScreen(navController)
         }
@@ -168,6 +191,7 @@ fun AppNavigation(navController: NavHostController) {
         ) { entry ->
             val fromSignup =
                 entry.arguments?.getBoolean("fromSignup") ?: false
+
             TermsAndConditionsScreen(navController, fromSignup)
         }
 
@@ -188,14 +212,20 @@ fun AppNavigation(navController: NavHostController) {
             ProviderDashboardScreen(navController)
         }
 
+        composable(Routes.EditProviderProfile.route) {
+            EditProviderProfileScreen(navController)
+        }
+
         composable(
             route = Routes.ProviderActiveJob.route,
             arguments = listOf(
                 navArgument("requestId") { type = NavType.StringType }
             )
         ) { backStackEntry ->
+
             val requestId =
                 backStackEntry.arguments?.getString("requestId")!!
+
             ProviderActiveJobScreen(
                 requestId = requestId,
                 navController = navController
@@ -208,11 +238,12 @@ fun AppNavigation(navController: NavHostController) {
                 navArgument("requestId") { type = NavType.StringType }
             )
         ) { backStackEntry ->
+
             val requestId =
                 backStackEntry.arguments?.getString("requestId")!!
+
             ProviderMapScreen(
-                requestId = requestId,
-                confirmProvider = false
+                requestId = requestId
             )
         }
     }

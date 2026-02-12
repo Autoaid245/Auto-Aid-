@@ -20,14 +20,12 @@ fun ProviderDashboardScreen(
     navController: NavHostController
 ) {
 
-    /* ---------------- CORE DEPENDENCIES ---------------- */
     val vm = remember { ProviderViewModel() }
     val auth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
 
     val providerId = auth.currentUser?.uid ?: return
 
-    /* ---------------- STATE ---------------- */
     var provider by remember { mutableStateOf<Provider?>(null) }
     var loading by remember { mutableStateOf(true) }
     var tab by remember { mutableStateOf(0) }
@@ -46,17 +44,23 @@ fun ProviderDashboardScreen(
                     name = doc.getString("name") ?: "",
                     phone = doc.getString("phone") ?: "",
                     providerType = providerType,
-                    rating = doc.getDouble("rating") ?: 0.0
+                    rating = doc.getDouble("rating") ?: 0.0,
+                    profileImageUrl = doc.getString("profileImageUrl") ?: ""
                 )
 
-                // 🔥 START LISTENING USING REAL SERVICE TYPE
                 vm.start(providerType, providerId)
-
                 loading = false
             }
             .addOnFailureListener {
                 loading = false
             }
+    }
+
+    /* ---------------- IMAGE UPLOAD HANDLER ---------------- */
+    val uploadImage = rememberProfileImagePicker(
+        providerId = providerId
+    ) { newUrl ->
+        provider = provider?.copy(profileImageUrl = newUrl)
     }
 
     /* ---------------- LOADING STATE ---------------- */
@@ -72,7 +76,6 @@ fun ProviderDashboardScreen(
 
     val safeProvider = provider ?: return
 
-    /* ---------------- UI ---------------- */
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +83,20 @@ fun ProviderDashboardScreen(
     ) {
 
         /* ---------- PROFILE ---------- */
-        ProviderProfileCard(safeProvider)
+        ProviderProfileCard(
+            provider = safeProvider,
+            onOnlineChange = { isOnline ->
+                db.collection("users")
+                    .document(providerId)
+                    .update("isOnline", isOnline)
+            },
+            onEditProfile = {
+                navController.navigate(Routes.EditProviderProfile.route)
+            },
+            onChangeProfileImage = {
+                uploadImage()
+            }
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -106,7 +122,6 @@ fun ProviderDashboardScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        /* ---------- TAB CONTENT ---------- */
         when (tab) {
 
             /* ===== REQUESTS ===== */

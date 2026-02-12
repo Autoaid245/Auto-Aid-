@@ -5,6 +5,7 @@ sealed class Routes(val route: String) {
     /* ---------- Splash & Onboard ---------- */
     object SplashScreen : Routes("splash")
     object OnBoardScreen : Routes("onboard")
+    object ConsentScreen : Routes("consent_screen")
 
     /* ---------- Auth ---------- */
     object LoginScreen : Routes("login")
@@ -51,6 +52,8 @@ sealed class Routes(val route: String) {
 
     /* ---------- PROVIDER ---------- */
     object ProviderDashboard : Routes("provider_dashboard")
+
+    object EditProviderProfile : Routes("edit_provider_profile")
 
     object ProviderActiveJob : Routes("provider_active_job/{requestId}") {
         fun createRoute(requestId: String) =

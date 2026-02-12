@@ -12,13 +12,12 @@ import com.project.auto_aid.provider.ProviderViewModel
 
 @Composable
 fun ProviderMapScreen(
-    requestId: String,
-    confirmProvider: Boolean
+    requestId: String
 ) {
-    // ✅ ViewModel obtained correctly
+
     val vm: ProviderViewModel = viewModel()
 
-    // 🔵 Provider location (TEMP – replace with real GPS later)
+    // 🔵 Provider location (Temporary – replace with real GPS later)
     val providerLocation = remember {
         LatLng(0.3476, 32.5825) // Kampala sample
     }
@@ -26,14 +25,13 @@ fun ProviderMapScreen(
     // 🔴 User live location
     var userLocation by remember { mutableStateOf<LatLng?>(null) }
 
-    // 🔹 Listen to USER location in real time
+    // 🔹 Listen to USER location
     LaunchedEffect(requestId) {
         vm.listenUserLocation(requestId) { lat, lng ->
             userLocation = LatLng(lat, lng)
         }
     }
 
-    // 🔹 Camera state
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             providerLocation,
@@ -41,7 +39,7 @@ fun ProviderMapScreen(
         )
     }
 
-    // 🔥 Move camera when user location updates
+    // 🔥 Animate camera when user moves
     LaunchedEffect(userLocation) {
         userLocation?.let {
             cameraPositionState.animate(
@@ -51,24 +49,25 @@ fun ProviderMapScreen(
         }
     }
 
-    // 🔹 Google Map
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
-        properties = MapProperties(isMyLocationEnabled = confirmProvider),
+        properties = MapProperties(
+            isMyLocationEnabled = true   // Always enabled for provider
+        ),
         uiSettings = MapUiSettings(
             zoomControlsEnabled = true,
-            myLocationButtonEnabled = confirmProvider
+            myLocationButtonEnabled = true
         )
     ) {
 
-        // 🔵 Provider Marker
+        // 🔵 Provider marker
         Marker(
             state = MarkerState(position = providerLocation),
             title = "You (Provider)"
         )
 
-        // 🔴 User Marker
+        // 🔴 User marker
         userLocation?.let {
             Marker(
                 state = MarkerState(position = it),
