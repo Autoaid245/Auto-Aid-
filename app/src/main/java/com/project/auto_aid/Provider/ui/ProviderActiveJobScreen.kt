@@ -22,12 +22,19 @@ fun ProviderActiveJobScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text("Active Job", style = MaterialTheme.typography.titleLarge)
-        Spacer(Modifier.height(8.dp))
-        Text("Request ID: $requestId")
 
-        Spacer(Modifier.height(16.dp))
+        Text(
+            text = "Active Job",
+            style = MaterialTheme.typography.titleLarge
+        )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Request ID: $requestId")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 🔵 OPEN MAP
         Button(
             onClick = {
                 navController.navigate(
@@ -39,8 +46,9 @@ fun ProviderActiveJobScreen(
             Text("Open Map")
         }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
+        // 🔴 COMPLETE JOB
         Button(
             onClick = {
                 vm.updateStatus(requestId, "completed")

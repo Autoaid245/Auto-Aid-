@@ -50,12 +50,12 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.9.2")
 
     implementation("com.google.android.material:material:1.11.0")
-<<<<<<< HEAD
 
-=======
+
+
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.maps.android:maps-compose:4.3.0")
->>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
+
 
     /* ---------------- COMPOSE (ONE BOM) ---------------- */
     implementation(platform("androidx.compose:compose-bom:2024.02.02"))

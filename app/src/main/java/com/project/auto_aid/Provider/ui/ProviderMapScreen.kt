@@ -53,7 +53,7 @@ fun ProviderMapScreen(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
         properties = MapProperties(
-            isMyLocationEnabled = true   // Always enabled for provider
+            isMyLocationEnabled = true
         ),
         uiSettings = MapUiSettings(
             zoomControlsEnabled = true,
