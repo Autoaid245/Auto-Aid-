@@ -1,5 +1,6 @@
 package com.project.auto_aid.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -9,20 +10,35 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.project.auto_aid.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TermsAndConditionsScreen(
     navController: NavController,
-    fromSignup: Boolean = false
+    fromSignup: Boolean = false,
+
+    // 🔽 THESE COME FROM SIGNUP (DO NOT CHANGE UI)
+    name: String = "",
+    email: String = "",
+    phone: String = "",
+    password: String = "",
+    role: String = ""
 ) {
 
+    val context = LocalContext.current
+    val auth = FirebaseAuth.getInstance()
+    val db = FirebaseFirestore.getInstance()
+
     var accepted by remember { mutableStateOf(false) }
+    var loading by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -83,8 +99,6 @@ fun TermsAndConditionsScreen(
                         5. Misuse of the platform may result in account suspension.
                         
                         6. Your data is handled according to our Privacy Policy.
-                        
-                        Please read carefully before accepting.
                     """.trimIndent(),
                     fontSize = 15.sp,
                     lineHeight = 22.sp
@@ -92,16 +106,12 @@ fun TermsAndConditionsScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
                         checked = accepted,
                         onCheckedChange = { accepted = it }
                     )
-
                     Spacer(modifier = Modifier.width(8.dp))
-
                     Text(
                         text = "I have read and agree to the Terms & Conditions",
                         fontSize = 14.sp
@@ -119,29 +129,83 @@ fun TermsAndConditionsScreen(
 
                 Button(
                     onClick = {
+                        if (!accepted || loading) return@Button
+
+                        // 🔥 THIS IS THE FIX
                         if (fromSignup) {
-                            navController.navigate(Routes.SignupScreen.route) {
-                                popUpTo(Routes.TermsAndConditionsScreen.route) {
-                                    inclusive = true
+
+                            loading = true
+
+                            auth.createUserWithEmailAndPassword(email, password)
+                                .addOnSuccessListener { result ->
+
+                                    val uid = result.user?.uid ?: return@addOnSuccessListener
+
+                                    val userData = hashMapOf(
+                                        "name" to name,
+                                        "email" to email,
+                                        "phone" to phone,
+                                        "role" to role.lowercase(), // ✅ CRITICAL
+                                        "createdAt" to System.currentTimeMillis()
+                                    )
+
+                                    db.collection("users")
+                                        .document(uid)
+                                        .set(userData)
+                                        .addOnSuccessListener {
+
+                                            loading = false
+
+                                            // ✅ Navigate by role
+                                            when (role.lowercase()) {
+                                                "user" ->
+                                                    navController.navigate(Routes.HomeScreen.route) {
+                                                        popUpTo(0)
+                                                    }
+
+                                                "provider" ->
+                                                    navController.navigate(Routes.GarageScreen.route) {
+                                                        popUpTo(0)
+                                                    }
+                                            }
+                                        }
+                                        .addOnFailureListener {
+                                            loading = false
+                                            Toast.makeText(
+                                                context,
+                                                "Failed to save user data",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                 }
-                            }
+                                .addOnFailureListener {
+                                    loading = false
+                                    Toast.makeText(
+                                        context,
+                                        it.localizedMessage ?: "Signup failed",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
                         } else {
                             navController.popBackStack()
                         }
                     },
-                    enabled = accepted,
+                    enabled = accepted && !loading,
                     modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.medium
                 ) {
-                    Text("ACCEPT")
+                    if (loading) {
+                        CircularProgressIndicator(strokeWidth = 2.dp)
+                    } else {
+                        Text("ACCEPT")
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedButton(
-                    onClick = {
-                        navController.popBackStack()
-                    },
+                    onClick = { navController.popBackStack() },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("DECLINE")

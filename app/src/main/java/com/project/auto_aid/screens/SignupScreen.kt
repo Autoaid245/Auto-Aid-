@@ -17,19 +17,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.project.auto_aid.R
 import com.project.auto_aid.navigation.Routes
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -43,7 +42,7 @@ fun SignupScreen(navController: NavController) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
-    var role by remember { mutableStateOf("") } // change if needed
+    var role by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -53,10 +52,11 @@ fun SignupScreen(navController: NavController) {
     var showConfirm by remember { mutableStateOf(false) }
     var businessType by remember { mutableStateOf("") }
     var subscription by remember { mutableStateOf("") }
+    var loading by remember { mutableStateOf(false) }
 
     if (role.isEmpty()) {
         RoleSelection { selectedRole ->
-            role = selectedRole
+            role = selectedRole.lowercase()
         }
         return
     }
@@ -78,14 +78,15 @@ fun SignupScreen(navController: NavController) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
+
         Text(
             "Fast help at your location",
             color = Color.Gray,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(6.dp))
 
         Card(
             modifier = Modifier
@@ -126,7 +127,7 @@ fun SignupScreen(navController: NavController) {
                     }
                 }
 
-                if (role.equals("provider", ignoreCase = true)) {
+                if (role == "provider") {
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -154,20 +155,67 @@ fun SignupScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
+            enabled = !loading,
             onClick = {
+
                 if (name.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank()) {
                     toast(context, "Fill in all fields")
                     return@Button
                 }
+
+                if (role == "provider" && businessType.isBlank()) {
+                    toast(context, "Select service type")
+                    return@Button
+                }
+
                 if (!isValidUgandaPhone(phone)) {
                     toast(context, "Invalid Uganda phone number")
                     return@Button
                 }
+
                 if (password != confirmPassword) {
                     toast(context, "Passwords do not match")
                     return@Button
                 }
-                navController.navigate(Routes.TermsAndConditionsScreen.route)
+
+                loading = true
+
+                FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener { result ->
+
+                        val uid = result.user?.uid ?: return@addOnSuccessListener
+                        val db = FirebaseFirestore.getInstance()
+
+                        val userData = hashMapOf(
+                            "uid" to uid,
+                            "name" to name,
+                            "email" to email,
+                            "phone" to phone,
+                            "role" to role,
+                            "providerType" to if (role == "provider") businessType.lowercase() else "",
+                            "subscription" to if (role == "provider") subscription else "",
+                            "createdAt" to System.currentTimeMillis()
+                        )
+
+                        db.collection("users")
+                            .document(uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                toast(context, "Account created successfully")
+                                navController.navigate(Routes.LoginScreen.route) {
+                                    popUpTo(Routes.SignupScreen.route) { inclusive = true }
+                                }
+                            }
+                            .addOnFailureListener {
+                                loading = false
+                                toast(context, it.message ?: "Failed to save user")
+                            }
+                    }
+                    .addOnFailureListener {
+                        loading = false
+                        toast(context, it.message ?: "Signup failed")
+                    }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -179,7 +227,15 @@ fun SignupScreen(navController: NavController) {
                 contentColor = Color.White
             )
         ) {
-            Text("Continue", fontSize = 18.sp)
+            if (loading) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    strokeWidth = 2.dp,
+                    modifier = Modifier.size(22.dp)
+                )
+            } else {
+                Text("Continue", fontSize = 18.sp)
+            }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -188,11 +244,10 @@ fun SignupScreen(navController: NavController) {
             onClick = { navController.navigate(Routes.LoginScreen.route) },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-
             Text(
                 buildAnnotatedString {
                     withStyle(SpanStyle(color = Color.Gray)) {
-                        append("Don’t have an account? ")
+                        append("Already have an account? ")
                     }
                     withStyle(
                         SpanStyle(
@@ -216,7 +271,6 @@ fun SignupScreen(navController: NavController) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HeroImageSlider() {
-
     val images = listOf(
         R.drawable.total_1,
         R.drawable.shell_2,
@@ -249,7 +303,7 @@ fun HeroImageSlider() {
     }
 }
 
-/* ================= COMPONENTS ================= */
+/* ================= COMPONENTS & UTILS ================= */
 
 @Composable
 fun Input(label: String, value: String, onChange: (String) -> Unit) {
@@ -258,7 +312,9 @@ fun Input(label: String, value: String, onChange: (String) -> Unit) {
         onValueChange = onChange,
         label = { Text(label) },
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
     )
 }
 
@@ -301,8 +357,6 @@ fun UgandaPhoneInput(
     )
 }
 
-/* ================= DROPDOWN (FIXED) ================= */
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Dropdown(
@@ -316,7 +370,7 @@ fun Dropdown(
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
-        modifier = Modifier.zIndex(1f) // ✅ FIX
+        modifier = Modifier.zIndex(1f)
     ) {
 
         OutlinedTextField(
@@ -349,9 +403,6 @@ fun Dropdown(
     }
 }
 
-
-/* ================= ROLE SELECTION ================= */
-
 @Composable
 fun RoleSelection(onSelect: (String) -> Unit) {
     Box(
@@ -359,19 +410,16 @@ fun RoleSelection(onSelect: (String) -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.fuel), // 👈 choose your image
+            painter = painterResource(id = R.drawable.fuel),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Color.Black.copy(alpha = 0.55f)) // 👈 BLUR STRENGTH
-
+            modifier = Modifier.fillMaxSize()
         )
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.55f)) // ✅ contrast control
+                .background(Color.Black.copy(alpha = 0.55f))
         )
 
         Card(
@@ -394,15 +442,8 @@ fun RoleSelection(onSelect: (String) -> Unit) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { onSelect("User") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    shape = RoundedCornerShape(20.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF0A9AD9),
-                        contentColor = Color.White
-                    )
+                    onClick = { onSelect("user") },
+                    modifier = Modifier.fillMaxWidth().height(48.dp)
                 ) {
                     Text("User")
                 }
@@ -411,14 +452,7 @@ fun RoleSelection(onSelect: (String) -> Unit) {
 
                 Button(
                     onClick = { onSelect("provider") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    shape = RoundedCornerShape(20.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF0A9AD9),
-                        contentColor = Color.White
-                    )
+                    modifier = Modifier.fillMaxWidth().height(48.dp)
                 ) {
                     Text("Service Provider")
                 }
@@ -427,8 +461,6 @@ fun RoleSelection(onSelect: (String) -> Unit) {
     }
 }
 
-/* ================= UTILS ================= */
-
 fun isValidUgandaPhone(phone: String): Boolean {
     val prefixes = listOf("70", "74", "75", "76", "77", "78")
     return phone.length == 9 && prefixes.any { phone.startsWith(it) }
@@ -436,12 +468,4 @@ fun isValidUgandaPhone(phone: String): Boolean {
 
 fun toast(context: Context, msg: String) {
     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-}
-
-/* ================= PREVIEW ================= */
-
-@Preview(showBackground = true, device = "spec:width=360dp,height=640dp")
-@Composable
-fun SignupScreenPreview() {
-    SignupScreen(navController = rememberNavController())
 }
