@@ -14,7 +14,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+<<<<<<< HEAD
 import androidx.compose.ui.draw.blur
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -49,7 +52,11 @@ fun LoginScreen(navController: NavController) {
     val auth = if (isPreview) null else FirebaseAuth.getInstance()
     val db = if (isPreview) null else FirebaseFirestore.getInstance()
 
+<<<<<<< HEAD
     // ✅ PREVIEW-SAFE ROLE (FIX #1)
+=======
+    // ✅ PREVIEW-SAFE ROLE (UNCHANGED)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
     var role by remember {
         mutableStateOf(if (isPreview) "User" else null)
     }
@@ -60,7 +67,11 @@ fun LoginScreen(navController: NavController) {
     var loading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf("") }
 
+<<<<<<< HEAD
     // 🔹 ROLE SELECTION FIRST (UNCHANGED LOGIC)
+=======
+    // 🔹 ROLE SELECTION FIRST (UNCHANGED)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
     if (role == null) {
         RoleSelectionScreen { selectedRole ->
             role = selectedRole
@@ -68,7 +79,15 @@ fun LoginScreen(navController: NavController) {
         return
     }
 
+<<<<<<< HEAD
     Column(modifier = Modifier.fillMaxSize()) {
+=======
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 
         HeroImageSlider()
 
@@ -187,6 +206,61 @@ fun LoginScreen(navController: NavController) {
                 Button(
                     onClick = {
                         if (loading || isPreview) return@Button
+<<<<<<< HEAD
+=======
+
+                        if (email.isBlank() || password.isBlank()) {
+                            errorMsg = "Email and password cannot be empty"
+                            return@Button
+                        }
+
+                        loading = true
+                        errorMsg = ""
+
+                        auth?.signInWithEmailAndPassword(email.trim(), password)
+                            ?.addOnSuccessListener { result ->
+
+                                val uid = result.user?.uid ?: return@addOnSuccessListener
+
+                                db?.collection("users")
+                                    ?.document(uid)
+                                    ?.get()
+                                    ?.addOnSuccessListener { doc ->
+
+                                        loading = false
+
+                                        val savedRole = doc.getString("role")
+
+                                        // ✅ FIX #1: CASE + NULL SAFE ROLE CHECK
+                                        if (
+                                            savedRole == null ||
+                                            savedRole.lowercase() != role!!.lowercase()
+                                        ) {
+                                            errorMsg = "Invalid role selected"
+                                            auth.signOut()
+                                            return@addOnSuccessListener
+                                        }
+
+                                        // ✅ FIX #2: CASE-SAFE NAVIGATION
+                                        when (role!!.lowercase()) {
+                                            "user" -> navController.navigate(Routes.HomeScreen.route) {
+                                                popUpTo(0)
+                                            }
+                                            "provider" -> navController.navigate(Routes.ProviderDashboard.route) {
+                                                popUpTo(0)
+                                            }
+                                        }
+                                    }
+                                    ?.addOnFailureListener {
+                                        loading = false
+                                        errorMsg = "Failed to fetch user data"
+                                    }
+                            }
+                            ?.addOnFailureListener {
+                                loading = false
+                                errorMsg = it.localizedMessage ?: "Login failed"
+                            }
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -199,7 +273,19 @@ fun LoginScreen(navController: NavController) {
                         contentColor = Color.White
                     )
                 ) {
+<<<<<<< HEAD
                     Text("Login", fontSize = 18.sp)
+=======
+                    if (loading) {
+                        CircularProgressIndicator(
+                            color = Color.White,
+                            strokeWidth = 2.dp,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    } else {
+                        Text("Login", fontSize = 18.sp)
+                    }
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -247,7 +333,11 @@ fun LoginScreen(navController: NavController) {
 }
 
 /* =====================================================
+<<<<<<< HEAD
    ROLE SELECTION SCREEN
+=======
+   ROLE SELECTION SCREEN (UNCHANGED)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 ===================================================== */
 @Composable
 fun RoleSelectionScreen(onSelect: (String) -> Unit) {
@@ -257,6 +347,7 @@ fun RoleSelectionScreen(onSelect: (String) -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
+<<<<<<< HEAD
             painter = painterResource(id = R.drawable.fuel), // 👈 choose your image
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -264,12 +355,22 @@ fun RoleSelectionScreen(onSelect: (String) -> Unit) {
                 .fillMaxSize()
                 .background(
                     Color.Black.copy(alpha = 0.55f))// 👈 BLUR STRENGTH
+=======
+            painter = painterResource(id = R.drawable.fuel),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
         )
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
+<<<<<<< HEAD
                 .background(Color.Black.copy(alpha = 0.55f)) // ✅ contrast control
+=======
+                .background(Color.Black.copy(alpha = 0.55f))
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
         )
 
         Card(

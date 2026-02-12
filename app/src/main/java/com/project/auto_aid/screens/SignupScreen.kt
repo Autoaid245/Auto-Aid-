@@ -17,11 +17,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+<<<<<<< HEAD
 import androidx.compose.ui.tooling.preview.Preview
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+<<<<<<< HEAD
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.project.auto_aid.R
@@ -30,6 +34,16 @@ import kotlinx.coroutines.delay
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.draw.blur
+=======
+import coil.compose.AsyncImage
+import com.project.auto_aid.R
+import com.project.auto_aid.navigation.Routes
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.delay
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material3.ExperimentalMaterial3Api
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -43,7 +57,11 @@ fun SignupScreen(navController: NavController) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
+<<<<<<< HEAD
     var role by remember { mutableStateOf("") } // change if needed
+=======
+    var role by remember { mutableStateOf("") }
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -53,10 +71,18 @@ fun SignupScreen(navController: NavController) {
     var showConfirm by remember { mutableStateOf(false) }
     var businessType by remember { mutableStateOf("") }
     var subscription by remember { mutableStateOf("") }
+<<<<<<< HEAD
 
     if (role.isEmpty()) {
         RoleSelection { selectedRole ->
             role = selectedRole
+=======
+    var loading by remember { mutableStateOf(false) }
+
+    if (role.isEmpty()) {
+        RoleSelection { selectedRole ->
+            role = selectedRole.lowercase()
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
         }
         return
     }
@@ -78,14 +104,23 @@ fun SignupScreen(navController: NavController) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
+<<<<<<< HEAD
         Spacer(modifier = Modifier.height(8.dp))
+=======
+        Spacer(modifier = Modifier.height(4.dp))
+
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
         Text(
             "Fast help at your location",
             color = Color.Gray,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
+<<<<<<< HEAD
         Spacer(modifier = Modifier.height(5.dp))
+=======
+        Spacer(modifier = Modifier.height(6.dp))
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 
         Card(
             modifier = Modifier
@@ -126,7 +161,11 @@ fun SignupScreen(navController: NavController) {
                     }
                 }
 
+<<<<<<< HEAD
                 if (role.equals("provider", ignoreCase = true)) {
+=======
+                if (role == "provider") {
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -154,20 +193,81 @@ fun SignupScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
+<<<<<<< HEAD
             onClick = {
+=======
+            enabled = !loading,
+            onClick = {
+
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                 if (name.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank()) {
                     toast(context, "Fill in all fields")
                     return@Button
                 }
+<<<<<<< HEAD
+=======
+
+                if (role == "provider" && businessType.isBlank()) {
+                    toast(context, "Select service type")
+                    return@Button
+                }
+
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                 if (!isValidUgandaPhone(phone)) {
                     toast(context, "Invalid Uganda phone number")
                     return@Button
                 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                 if (password != confirmPassword) {
                     toast(context, "Passwords do not match")
                     return@Button
                 }
+<<<<<<< HEAD
                 navController.navigate(Routes.TermsAndConditionsScreen.route)
+=======
+
+                loading = true
+
+                FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener { result ->
+
+                        val uid = result.user?.uid ?: return@addOnSuccessListener
+                        val db = FirebaseFirestore.getInstance()
+
+                        val userData = hashMapOf(
+                            "uid" to uid,
+                            "name" to name,
+                            "email" to email,
+                            "phone" to phone,
+                            "role" to role,
+                            "providerType" to if (role == "provider") businessType.lowercase() else "",
+                            "subscription" to if (role == "provider") subscription else "",
+                            "createdAt" to System.currentTimeMillis()
+                        )
+
+                        db.collection("users")
+                            .document(uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                toast(context, "Account created successfully")
+                                navController.navigate(Routes.LoginScreen.route) {
+                                    popUpTo(Routes.SignupScreen.route) { inclusive = true }
+                                }
+                            }
+                            .addOnFailureListener {
+                                loading = false
+                                toast(context, it.message ?: "Failed to save user")
+                            }
+                    }
+                    .addOnFailureListener {
+                        loading = false
+                        toast(context, it.message ?: "Signup failed")
+                    }
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -179,7 +279,19 @@ fun SignupScreen(navController: NavController) {
                 contentColor = Color.White
             )
         ) {
+<<<<<<< HEAD
             Text("Continue", fontSize = 18.sp)
+=======
+            if (loading) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    strokeWidth = 2.dp,
+                    modifier = Modifier.size(22.dp)
+                )
+            } else {
+                Text("Continue", fontSize = 18.sp)
+            }
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -188,11 +300,18 @@ fun SignupScreen(navController: NavController) {
             onClick = { navController.navigate(Routes.LoginScreen.route) },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
+<<<<<<< HEAD
 
             Text(
                 buildAnnotatedString {
                     withStyle(SpanStyle(color = Color.Gray)) {
                         append("Don’t have an account? ")
+=======
+            Text(
+                buildAnnotatedString {
+                    withStyle(SpanStyle(color = Color.Gray)) {
+                        append("Already have an account? ")
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                     }
                     withStyle(
                         SpanStyle(
@@ -216,7 +335,10 @@ fun SignupScreen(navController: NavController) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HeroImageSlider() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
     val images = listOf(
         R.drawable.total_1,
         R.drawable.shell_2,
@@ -249,7 +371,11 @@ fun HeroImageSlider() {
     }
 }
 
+<<<<<<< HEAD
 /* ================= COMPONENTS ================= */
+=======
+/* ================= COMPONENTS & UTILS ================= */
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 
 @Composable
 fun Input(label: String, value: String, onChange: (String) -> Unit) {
@@ -258,7 +384,13 @@ fun Input(label: String, value: String, onChange: (String) -> Unit) {
         onValueChange = onChange,
         label = { Text(label) },
         singleLine = true,
+<<<<<<< HEAD
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+=======
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
     )
 }
 
@@ -301,8 +433,11 @@ fun UgandaPhoneInput(
     )
 }
 
+<<<<<<< HEAD
 /* ================= DROPDOWN (FIXED) ================= */
 
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Dropdown(
@@ -316,7 +451,11 @@ fun Dropdown(
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
+<<<<<<< HEAD
         modifier = Modifier.zIndex(1f) // ✅ FIX
+=======
+        modifier = Modifier.zIndex(1f)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
     ) {
 
         OutlinedTextField(
@@ -349,9 +488,12 @@ fun Dropdown(
     }
 }
 
+<<<<<<< HEAD
 
 /* ================= ROLE SELECTION ================= */
 
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 @Composable
 fun RoleSelection(onSelect: (String) -> Unit) {
     Box(
@@ -359,6 +501,7 @@ fun RoleSelection(onSelect: (String) -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
+<<<<<<< HEAD
             painter = painterResource(id = R.drawable.fuel), // 👈 choose your image
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -372,6 +515,18 @@ fun RoleSelection(onSelect: (String) -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.55f)) // ✅ contrast control
+=======
+            painter = painterResource(id = R.drawable.fuel),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.55f))
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
         )
 
         Card(
@@ -394,6 +549,7 @@ fun RoleSelection(onSelect: (String) -> Unit) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
+<<<<<<< HEAD
                     onClick = { onSelect("User") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -403,6 +559,10 @@ fun RoleSelection(onSelect: (String) -> Unit) {
                         containerColor = Color(0xFF0A9AD9),
                         contentColor = Color.White
                     )
+=======
+                    onClick = { onSelect("user") },
+                    modifier = Modifier.fillMaxWidth().height(48.dp)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                 ) {
                     Text("User")
                 }
@@ -411,6 +571,7 @@ fun RoleSelection(onSelect: (String) -> Unit) {
 
                 Button(
                     onClick = { onSelect("provider") },
+<<<<<<< HEAD
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
@@ -419,6 +580,9 @@ fun RoleSelection(onSelect: (String) -> Unit) {
                         containerColor = Color(0xFF0A9AD9),
                         contentColor = Color.White
                     )
+=======
+                    modifier = Modifier.fillMaxWidth().height(48.dp)
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
                 ) {
                     Text("Service Provider")
                 }
@@ -427,8 +591,11 @@ fun RoleSelection(onSelect: (String) -> Unit) {
     }
 }
 
+<<<<<<< HEAD
 /* ================= UTILS ================= */
 
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 fun isValidUgandaPhone(phone: String): Boolean {
     val prefixes = listOf("70", "74", "75", "76", "77", "78")
     return phone.length == 9 && prefixes.any { phone.startsWith(it) }
@@ -436,6 +603,7 @@ fun isValidUgandaPhone(phone: String): Boolean {
 
 fun toast(context: Context, msg: String) {
     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+<<<<<<< HEAD
 }
 
 /* ================= PREVIEW ================= */
@@ -444,4 +612,6 @@ fun toast(context: Context, msg: String) {
 @Composable
 fun SignupScreenPreview() {
     SignupScreen(navController = rememberNavController())
+=======
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 }

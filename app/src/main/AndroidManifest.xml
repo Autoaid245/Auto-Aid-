@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.INTERNET" />
+=======
+    <!-- ✅ Permissions MUST be here -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 
     <application
         android:allowBackup="true"
@@ -13,6 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AutoAid">
 
+<<<<<<< HEAD
+=======
+        <!-- ✅ Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_GOOGLE_MAPS_API_KEY" />
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
 
         <activity
             android:name=".MainActivity"
@@ -25,4 +39,8 @@
 
     </application>
 
+<<<<<<< HEAD
 </manifest>
+=======
+</manifest>
+>>>>>>> 5171f649971e06d49a39c0ca5de78ab0caa9fea0
