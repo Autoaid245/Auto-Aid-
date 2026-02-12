@@ -13,6 +13,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.CarRepair
+import androidx.compose.material.icons.filled.LocalShipping
+import androidx.compose.material.icons.filled.LocalGasStation
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,12 +54,11 @@ object AppColors {
 data class QuickAccessItem(val icon: ImageVector, val title: String)
 
 val quickAccessData = listOf(
-    QuickAccessItem(Icons.Default.Build, "Garage"),
-    QuickAccessItem(Icons.Default.Warning, "Towing Track"),
-    QuickAccessItem(Icons.Default.Phone, "Fuel Delivery"),
-    QuickAccessItem(Icons.Default.Call, "Ambulance")
+    QuickAccessItem(Icons.Filled.CarRepair, "Garage"),
+    QuickAccessItem(Icons.Filled.LocalShipping, "Towing Track"),
+    QuickAccessItem(Icons.Filled.LocalGasStation, "Fuel Delivery"),
+    QuickAccessItem(Icons.Filled.MedicalServices, "Ambulance")
 )
-
 data class ServiceItem(val name: String, val location: String, val imageRes: Int)
 
 object AppImages {
