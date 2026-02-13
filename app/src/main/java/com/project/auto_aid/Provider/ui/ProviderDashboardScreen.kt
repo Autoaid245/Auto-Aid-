@@ -3,7 +3,10 @@ package com.project.auto_aid.provider.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
+import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,11 +17,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.project.auto_aid.navigation.Routes
 import com.project.auto_aid.provider.ProviderViewModel
 import com.project.auto_aid.provider.model.Provider
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProviderDashboardScreen(
     navController: NavHostController
 ) {
+
 
     val vm = remember { ProviderViewModel() }
     val auth = FirebaseAuth.getInstance()
@@ -29,12 +37,13 @@ fun ProviderDashboardScreen(
     var provider by remember { mutableStateOf<Provider?>(null) }
     var loading by remember { mutableStateOf(true) }
     var tab by remember { mutableStateOf(0) }
+    var showMenu by remember { mutableStateOf(false) }
+
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     /* ---------------- LOAD PROVIDER PROFILE ---------------- */
     LaunchedEffect(providerId) {
-        db.collection("users")
-            .document(providerId)
-            .get()
+        db.collection("users").document(providerId).get()
             .addOnSuccessListener { doc ->
 
                 val providerType = doc.getString("providerType") ?: ""
@@ -51,24 +60,15 @@ fun ProviderDashboardScreen(
                 vm.start(providerType, providerId)
                 loading = false
             }
-            .addOnFailureListener {
-                loading = false
-            }
+            .addOnFailureListener { loading = false }
     }
 
-    /* ---------------- IMAGE UPLOAD HANDLER ---------------- */
-    val uploadImage = rememberProfileImagePicker(
-        providerId = providerId
-    ) { newUrl ->
+    val uploadImage = rememberProfileImagePicker(providerId) { newUrl ->
         provider = provider?.copy(profileImageUrl = newUrl)
     }
 
-    /* ---------------- LOADING STATE ---------------- */
     if (loading) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
         return
@@ -76,102 +76,123 @@ fun ProviderDashboardScreen(
 
     val safeProvider = provider ?: return
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp)
-    ) {
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("AutoAid Provider") },
+                scrollBehavior = scrollBehavior,
+                actions = {
 
-        /* ---------- PROFILE ---------- */
-        ProviderProfileCard(
-            provider = safeProvider,
-            onOnlineChange = { isOnline ->
-                db.collection("users")
-                    .document(providerId)
-                    .update("isOnline", isOnline)
-            },
-            onEditProfile = {
-                navController.navigate(Routes.EditProviderProfile.route)
-            },
-            onChangeProfileImage = {
-                uploadImage()
-            }
-        )
+                    IconButton(onClick = { showMenu = true }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "Menu")
+                    }
 
-        Spacer(modifier = Modifier.height(8.dp))
+                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
 
-        /* ---------- STATS ---------- */
-        ProviderStatsRow(
-            pending = vm.pending.size,
-            active = vm.ongoing.size,
-            completed = vm.completed.size
-        )
+                        DropdownMenuItem(
+                            text = { Text("Edit Profile") },
+                            onClick = {
+                                showMenu = false
+                                navController.navigate(Routes.EditProviderProfile.route)
+                            }
+                        )
 
-        Spacer(modifier = Modifier.height(8.dp))
+                        DropdownMenuItem(
+                            text = { Text("Logout", color = MaterialTheme.colorScheme.error) },
+                            onClick = {
 
-        /* ---------- TABS ---------- */
-        TabRow(selectedTabIndex = tab) {
-            listOf("Requests", "Active", "History").forEachIndexed { index, title ->
-                Tab(
-                    selected = tab == index,
-                    onClick = { tab = index },
-                    text = { Text(title) }
-                )
-            }
-        }
+                                showMenu = false
 
-        Spacer(modifier = Modifier.height(8.dp))
+                                // 🔴 Set offline first
+                                db.collection("users").document(providerId)
+                                    .update("isOnline", false)
+                                    .addOnCompleteListener {
 
-        when (tab) {
+                                        FirebaseAuth.getInstance().signOut()
 
-            /* ===== REQUESTS ===== */
-            0 -> LazyColumn {
-                items(vm.pending) { request ->
-                    ProviderRequestCard(
-                        request = request,
-                        onAccept = {
-                            vm.accept(request.id, providerId)
-                            navController.navigate(
-                                Routes.ProviderActiveJob.createRoute(request.id)
-                            )
-                        },
-                        onNavigate = {
-                            navController.navigate(
-                                Routes.ProviderActiveJob.createRoute(request.id)
-                            )
-                        }
-                    )
-                }
-            }
-
-            /* ===== ACTIVE JOB ===== */
-            1 -> {
-                val activeRequest = vm.ongoing.firstOrNull()
-                if (activeRequest != null) {
-                    ProviderActiveJobScreen(
-                        requestId = activeRequest.id,
-                        navController = navController
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("No active job")
+                                        navController.navigate(Routes.LoginScreen.route) {
+                                            popUpTo(Routes.ProviderDashboard.route) { inclusive = true }
+                                        }
+                                    }
+                            }
+                        )
                     }
                 }
+            )
+        }
+    ) { padding ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .padding(padding)
+                .padding(horizontal = 12.dp)
+        ) {
+
+            ProviderProfileCard(
+                provider = safeProvider,
+                onOnlineChange = { isOnline ->
+                    db.collection("users").document(providerId).update("isOnline", isOnline)
+                },
+                onEditProfile = { navController.navigate(Routes.EditProviderProfile.route) },
+                onChangeProfileImage = { uploadImage() }
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            ProviderStatsRow(
+                pending = vm.pending.size,
+                active = vm.ongoing.size,
+                completed = vm.completed.size
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            TabRow(selectedTabIndex = tab) {
+                listOf("Requests", "Active", "History").forEachIndexed { index, title ->
+                    Tab(selected = tab == index, onClick = { tab = index }, text = { Text(title) })
+                }
             }
 
-            /* ===== HISTORY ===== */
-            2 -> LazyColumn {
-                items(vm.completed) { request ->
-                    ProviderRequestCard(
-                        request = request,
-                        onAccept = {},
-                        onNavigate = {}
-                    )
+            Spacer(Modifier.height(8.dp))
+
+            when (tab) {
+
+                0 -> LazyColumn {
+                    items(vm.pending) { request ->
+                        ProviderRequestCard(
+                            request = request,
+                            onAccept = {
+                                vm.accept(request.id, providerId)
+                                navController.navigate(Routes.ProviderActiveJob.createRoute(request.id))
+                            },
+                            onNavigate = {
+                                navController.navigate(Routes.ProviderActiveJob.createRoute(request.id))
+                            }
+                        )
+                    }
+                }
+
+                1 -> {
+                    val activeRequest = vm.ongoing.firstOrNull()
+                    if (activeRequest != null) {
+                        ProviderActiveJobScreen(activeRequest.id, navController)
+                    } else {
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("No active job")
+                        }
+                    }
+                }
+
+                2 -> LazyColumn {
+                    items(vm.completed) { request ->
+                        ProviderRequestCard(request = request, onAccept = {}, onNavigate = {})
+                    }
                 }
             }
         }
     }
+
+
 }
