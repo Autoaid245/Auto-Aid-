@@ -75,6 +75,8 @@ dependencies {
 
     /* ---------------- IMAGES ---------------- */
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("androidx.media3:media3-exoplayer:1.2.1")
+    implementation("androidx.media3:media3-ui:1.2.1")
 
     /* ---------------- FIREBASE ---------------- */
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))

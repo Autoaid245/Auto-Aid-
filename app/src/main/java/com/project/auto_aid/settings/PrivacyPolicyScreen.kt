@@ -8,9 +8,14 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.project.auto_aid.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,36 +47,62 @@ fun PrivacyPolicyScreen(navController: NavHostController) {
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = PRIVACY_TEXT,
+                text = buildAnnotatedString {
+
+                    append("AutoAid respects your privacy.\n")
+
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("DATA WE COLLECT\n")
+                    }
+                    append("• Name, email, phone number\n")
+                    append("• Location during service requests\n")
+                    append("• Usage and diagnostic data\n")
+
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("HOW WE USE DATA\n")
+                    }
+                    append("• To connect users with service providers\n")
+                    append("• Improve service reliability\n")
+                    append("• Ensure safety and fraud prevention\n")
+
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("DATA SHARING\n")
+                    }
+                    append("AutoAid does not sell personal data.\n")
+
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("SECURITY\n")
+                    }
+                    append("We apply reasonable technical and organizational measures to protect your data.\n\n")
+
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("CONSENT\n")
+                    }
+                    append("By using AutoAid, you consent to this policy.")
+                },
                 style = MaterialTheme.typography.bodyMedium,
-                lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.4
+                lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.4f
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        popUpTo(Routes.PrivacyPolicyScreen.route) { inclusive = true }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF0A9AD9),
+                    contentColor = Color.White
+                )
+            ) {
+                Text("CONTINUE")
+            }
         }
     }
 }
-
-private const val PRIVACY_TEXT = """
-AutoAid respects your privacy.
-
-DATA WE COLLECT
-• Name, email, phone number
-• Location during service requests
-• Usage and diagnostic data
-
-HOW WE USE DATA
-• To connect users with service providers
-• Improve service reliability
-• Ensure safety and fraud prevention
-
-DATA SHARING
-AutoAid does not sell personal data.
-
-SECURITY
-We apply reasonable technical and organizational measures to protect your data.
-
-CONSENT
-By using AutoAid, you consent to this policy.
-"""

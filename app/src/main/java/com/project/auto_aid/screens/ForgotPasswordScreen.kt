@@ -4,16 +4,20 @@ package com.project.auto_aid.screens
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -57,15 +61,27 @@ fun ForgotPasswordScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(90.dp))
 
-        // Icon (top)
-        Image(
-            painter = painterResource(id = R.drawable.logo01),
-            contentDescription = null,
+        Box(
             modifier = Modifier
-                .size(130.dp)
-                .clip(RoundedCornerShape(25.dp))
+                .offset(y = (-20).dp)
+                .size(110.dp)
+                .border(
+                    width = 7.dp,
+                    color = Color(0xFF0A9AD9),
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
         )
-
+        {
+            // Icon (top)
+            Image(
+                painter = painterResource(id = R.drawable.logo01),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(130.dp)
+                    .clip(RoundedCornerShape(25.dp))
+            )
+        }
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
@@ -144,7 +160,7 @@ fun ForgotPasswordScreen(navController: NavController) {
             Text("Send Code", fontSize = 16.sp)
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(52.dp))
 
         // Back to Login
         Row(
@@ -158,7 +174,9 @@ fun ForgotPasswordScreen(navController: NavController) {
             Text(
                 text = "Back to Login",
                 fontSize = 20.sp,
-                color = Color.Black
+                color = Color.Black,
+                fontWeight = FontWeight.Bold
+
             )
         }
     }

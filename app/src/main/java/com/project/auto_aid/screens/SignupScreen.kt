@@ -28,6 +28,7 @@ import com.project.auto_aid.R
 import com.project.auto_aid.navigation.Routes
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material3.DisplayMode.Companion.Input
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.res.painterResource
@@ -61,6 +62,8 @@ fun SignupScreen(navController: NavController) {
         return
     }
 
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,16 +88,20 @@ fun SignupScreen(navController: NavController) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(5.dp))
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            shape = RoundedCornerShape(16.dp),
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+            shape = RoundedCornerShape(22.dp),
+            elevation = CardDefaults.cardElevation(10.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            Column(modifier = Modifier.padding(10.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
 
                 Input("Full Name", name) { name = it }
                 Input("Email Address", email) { email = it }
@@ -105,9 +112,12 @@ fun SignupScreen(navController: NavController) {
                     isError = phone.isNotEmpty() && !isValidUgandaPhone(phone)
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
                     Box(modifier = Modifier.weight(1f)) {
                         PasswordInput(
                             label = "Password",
@@ -116,6 +126,7 @@ fun SignupScreen(navController: NavController) {
                             toggle = { showPassword = !showPassword }
                         ) { password = it }
                     }
+
                     Box(modifier = Modifier.weight(1f)) {
                         PasswordInput(
                             label = "Confirm",
@@ -127,10 +138,12 @@ fun SignupScreen(navController: NavController) {
                 }
 
                 if (role.equals("provider", ignoreCase = true)) {
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
                         Box(modifier = Modifier.weight(1f)) {
                             Dropdown(
                                 label = "Service Type",
