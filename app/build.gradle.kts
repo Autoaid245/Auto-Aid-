@@ -86,6 +86,10 @@ dependencies {
     implementation(libs.androidx.compose.material3.material3)
     implementation(libs.androidx.compose.runtime.runtime)
     implementation(libs.androidx.compose.foundation.foundation2)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     /* ---------------- DEBUG ---------------- */
     debugImplementation("androidx.compose.ui:ui-tooling")

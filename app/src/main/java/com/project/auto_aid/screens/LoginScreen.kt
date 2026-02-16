@@ -28,6 +28,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -212,6 +213,56 @@ fun LoginScreen(navController: NavController) {
                 Button(
                     onClick = {
                         if (loading || isPreview) return@Button
+
+                        if (email.isBlank() || password.isBlank()) {
+                            errorMsg = "Enter email and password"
+                            return@Button
+                        }
+
+                        loading = true
+                        errorMsg = ""
+
+                        auth?.signInWithEmailAndPassword(email.trim(), password.trim())
+                            ?.addOnSuccessListener { result ->
+                                val uid = result.user?.uid
+                                if (uid == null) {
+                                    loading = false
+                                    errorMsg = "Login failed (no user id)"
+                                    return@addOnSuccessListener
+                                }
+
+                                db?.collection("users")?.document(uid)?.get()
+                                    ?.addOnSuccessListener { doc ->
+                                        loading = false
+
+                                        val userRole = doc.getString("role")?.lowercase()
+                                        val selectedRole = role?.lowercase()
+                                        if (userRole == selectedRole) {
+
+                                            val target = if (userRole == "provider") {
+                                                Routes.ProviderDashboard.route
+                                            } else {
+                                                Routes.HomeScreen.route
+                                            }
+
+                                            navController.navigate(target) {
+                                                popUpTo(Routes.LoginScreen.route) { inclusive = true }
+                                            }
+
+                                        } else {
+                                            errorMsg = "Wrong role selected"
+                                            auth.signOut()
+                                        }
+                                    }
+                                    ?.addOnFailureListener {
+                                        loading = false
+                                        errorMsg = it.message ?: "Failed to load user data"
+                                    }
+                            }
+                            ?.addOnFailureListener {
+                                loading = false
+                                errorMsg = it.message ?: "Login failed"
+                            }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -224,7 +275,15 @@ fun LoginScreen(navController: NavController) {
                         contentColor = Color.White
                     )
                 ) {
-                    Text("Login", fontSize = 18.sp)
+                    if (loading) {
+                        CircularProgressIndicator(
+                            color = Color(0xFF0A9AD9),
+                            strokeWidth = 4.dp,
+                            modifier = Modifier.size(25.dp)
+                        )
+                    } else {
+                        Text("Login", fontSize = 18.sp)
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -244,10 +303,39 @@ fun LoginScreen(navController: NavController) {
                         if (result.resultCode == Activity.RESULT_OK) {
                             GoogleAuthHelper.handleResult(
                                 result.data,
+
+
                                 onSuccess = {
                                     Log.d("GoogleAuth", "Login success")
-                                    navController.navigate(Routes.HomeScreen.route)
+
+                                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                                    if (uid == null) {
+                                        navController.navigate(Routes.HomeScreen.route)
+                                        return@handleResult
+                                    }
+
+                                    FirebaseFirestore.getInstance()
+                                        .collection("users")
+                                        .document(uid)
+                                        .get()
+                                        .addOnSuccessListener { doc ->
+                                            val userRole = doc.getString("role")?.lowercase() ?: "user"
+
+                                            val target = if (userRole == "provider") {
+                                                Routes.ProviderDashboard.route
+                                            } else {
+                                                Routes.HomeScreen.route
+                                            }
+
+                                            navController.navigate(target) {
+                                                popUpTo(Routes.LoginScreen.route) { inclusive = true }
+                                            }
+                                        }
+                                        .addOnFailureListener {
+                                            navController.navigate(Routes.HomeScreen.route)
+                                        }
                                 },
+
                                 onError = { error ->
                                     Log.e("GoogleAuth", "Login failed: $error")
                                     Toast.makeText(context, error, Toast.LENGTH_LONG).show()

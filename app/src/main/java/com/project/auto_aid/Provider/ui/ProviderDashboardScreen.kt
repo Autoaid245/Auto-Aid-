@@ -14,6 +14,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.project.auto_aid.navigation.Routes
 import com.project.auto_aid.provider.ProviderViewModel
 import com.project.auto_aid.provider.model.Provider
+import com.project.auto_aid.provider.ui.ProviderActiveJobScreen
+import com.project.auto_aid.provider.ui.ProviderProfileCard
+import com.project.auto_aid.provider.ui.ProviderRequestCard
+import com.project.auto_aid.provider.ui.ProviderStatsRow
+import com.project.auto_aid.provider.ui.rememberProfileImagePicker
 
 @Composable
 fun ProviderDashboardScreen(
@@ -28,7 +33,7 @@ fun ProviderDashboardScreen(
 
     var provider by remember { mutableStateOf<Provider?>(null) }
     var loading by remember { mutableStateOf(true) }
-    var tab by remember { mutableStateOf(0) }
+    var tab by remember { mutableIntStateOf(0) }
 
     /* ---------------- LOAD PROVIDER PROFILE ---------------- */
     LaunchedEffect(providerId) {
