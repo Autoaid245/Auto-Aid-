@@ -56,7 +56,7 @@ fun VerifyCodeScreen(navController: NavController) {
 
         // Title
         Text(
-            text = "Verify your Identity",
+            text = "Enter Code",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
@@ -100,27 +100,18 @@ fun VerifyCodeScreen(navController: NavController) {
         // Verify Button
         Button(
             onClick = {
-                if (isCodeValid) {
-                    navController.navigate(Routes.ResetPasswordScreen.route)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Enter a valid 6-digit code",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                // ✅ go to your existing reset password screen
+                navController.navigate(Routes.ResetPasswordScreen.route)
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
-            enabled = isCodeValid,
-            shape = RoundedCornerShape(28.dp),
+                .height(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF0A9AD9),
                 contentColor = Color.White
             )
         ) {
-            Text("Verify", fontSize = 18.sp)
+            Text("Continue to Reset Password")
         }
 
 

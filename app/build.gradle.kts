@@ -52,6 +52,13 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
 
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+
+
+
+
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.maps.android:maps-compose:4.3.0")
@@ -72,6 +79,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     /* ---------------- NAVIGATION ---------------- */
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     /* ---------------- IMAGES ---------------- */
     implementation("io.coil-kt:coil-compose:2.5.0")

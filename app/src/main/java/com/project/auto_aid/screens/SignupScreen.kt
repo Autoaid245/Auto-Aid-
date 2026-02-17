@@ -2,21 +2,55 @@ package com.project.auto_aid.screens
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,22 +58,19 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.project.auto_aid.R
 import com.project.auto_aid.navigation.Routes
 import kotlinx.coroutines.delay
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material3.DisplayMode.Companion.Input
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 
 /* ================= SIGNUP SCREEN ================= */
 
 @Composable
 fun SignupScreen(navController: NavController) {
+
+    val auth = FirebaseAuth.getInstance()
+    val db = FirebaseFirestore.getInstance()
 
     val context = LocalContext.current
     val scrollState = rememberScrollState()
@@ -94,7 +125,7 @@ fun SignupScreen(navController: NavController) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 10.dp),
             shape = RoundedCornerShape(22.dp),
-            elevation = CardDefaults.cardElevation(10.dp),
+            elevation = CardDefaults.cardElevation(20.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Column(
@@ -166,6 +197,8 @@ fun SignupScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+
+
         Button(
             onClick = {
                 if (name.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank()) {
@@ -180,19 +213,68 @@ fun SignupScreen(navController: NavController) {
                     toast(context, "Passwords do not match")
                     return@Button
                 }
-                navController.navigate(Routes.TermsAndConditionsScreen.route)
+
+                // ✅ Providers must select extra fields
+                if (role.equals("provider", true) && businessType.isBlank()) {
+                    toast(context, "Select Service Type")
+                    return@Button
+                }
+                if (role.equals("provider", true) && subscription.isBlank()) {
+                    toast(context, "Select Subscription")
+                    return@Button
+                }
+
+                // ✅ Create Firebase Auth account
+                auth.createUserWithEmailAndPassword(email.trim(), password.trim())
+                    .addOnSuccessListener { result ->
+                        val uid = result.user?.uid ?: run {
+                            toast(context, "Signup failed (no uid)")
+                            return@addOnSuccessListener
+                        }
+
+                        // ✅ Save extra data in Firestore
+                        val userData = hashMapOf(
+                            "name" to name.trim(),
+                            "email" to email.trim(),
+                            "phone" to phone.trim(),
+                            "role" to role.lowercase(),
+                            "providerType" to if (role.equals("provider", true)) businessType.lowercase() else "",
+                            "subscription" to if (role.equals("provider", true)) subscription.lowercase() else "",
+                            "rating" to 0.0,
+                            "profileImageUrl" to "",
+                            "isOnline" to false
+                        )
+
+                        db.collection("users").document(uid).set(userData)
+                            .addOnSuccessListener {
+                                toast(context, "Account created successfully ✅")
+                                navController.navigate(Routes.LoginScreen.route) {
+                                    popUpTo(Routes.SignupScreen.route) { inclusive = true }
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                toast(context, e.message ?: "Failed to save user info")
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        toast(context, e.message ?: "Signup failed")
+                    }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 25.dp)
                 .height(52.dp),
+
             shape = RoundedCornerShape(25.dp),
+
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF0A9AD9),
                 contentColor = Color.White
             )
         ) {
-            Text("Continue", fontSize = 18.sp)
+            Text(
+                text = "Continue", fontSize = 18.sp
+            )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -283,6 +365,7 @@ fun PasswordInput(
     toggle: () -> Unit,
     onChange: (String) -> Unit
 ) {
+
     OutlinedTextField(
         value = value,
         onValueChange = onChange,
@@ -291,7 +374,16 @@ fun PasswordInput(
         visualTransformation =
             if (show) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
-            Text(if (show) "🙈" else "👁️", modifier = Modifier.clickable { toggle() })
+           IconButton(onClick = { toggle()}) {
+               Icon(
+                   painter = painterResource(
+                       id = if (show) R.drawable.no_see else R.drawable.see
+                   ),
+                   contentDescription = if (show) "Hide Password"
+                   else "Show Password",
+                   modifier = Modifier.size(25.dp)
+               )
+           }
         },
         modifier = Modifier.fillMaxWidth()
     )

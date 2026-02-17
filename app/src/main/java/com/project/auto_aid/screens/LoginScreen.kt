@@ -24,11 +24,14 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -48,6 +51,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
@@ -177,17 +181,22 @@ fun LoginScreen(navController: NavController) {
                             value = password,
                             onValueChange = { password = it },
                             label = { Text("Password") },
+                            singleLine = true,
                             visualTransformation =
                                 if (showPassword) VisualTransformation.None
                                 else PasswordVisualTransformation(),
                             trailingIcon = {
-                                Text(
-                                    text = if (showPassword) "🙈" else "👁️",
-                                    modifier = Modifier.clickable {
-                                        showPassword = !showPassword
-                                    }
+                                IconButton(onClick = { showPassword = !showPassword }) {
+                                    Icon(
+                                    painter = painterResource(
+                                        id = if (showPassword) R.drawable.no_see else R.drawable.see
+                                    ),
+                                    contentDescription = if (showPassword) "Hide Password" else "Show Password",
+                                    modifier = Modifier.size(25.dp)
                                 )
+                                    }
                             },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             modifier = Modifier.fillMaxWidth()
                         )
 

@@ -44,6 +44,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.project.auto_aid.R
+import com.project.auto_aid.navigation.Routes
 
 @Composable
 fun ForgotPasswordScreen(navController: NavController) {
@@ -119,35 +120,25 @@ fun ForgotPasswordScreen(navController: NavController) {
         Button(
             onClick = {
                 if (input.isBlank()) {
-                    Toast.makeText(context, "Please enter email or phone", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
 
-                if (input.contains("@")) {
-                    // Email reset (Firebase)
-                    Firebase.auth.sendPasswordResetEmail(input)
-                        .addOnSuccessListener {
-                            Toast.makeText(
-                                context,
-                                "Reset email sent. Check your inbox.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(
-                                context,
-                                it.message ?: "Failed to send reset email",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                } else {
-                    // Phone reset placeholder
-                    Toast.makeText(
-                        context,
-                        "SMS reset coming soon",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (!input.contains("@")) {
+                    Toast.makeText(context, "Enter a valid email (phone OTP not done yet)", Toast.LENGTH_SHORT).show()
+                    return@Button
                 }
+
+                Firebase.auth.sendPasswordResetEmail(input.trim())
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Reset link sent. Check your email.", Toast.LENGTH_LONG).show()
+
+                        // ✅ Go to OTP screen (we’ll treat it as “email confirmation screen”)
+                        navController.navigate(Routes.VerifyCodeScreen.route)
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, it.message ?: "Failed to send email", Toast.LENGTH_LONG).show()
+                    }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -174,7 +165,7 @@ fun ForgotPasswordScreen(navController: NavController) {
             Text(
                 text = "Back to Login",
                 fontSize = 20.sp,
-                color = Color.Black,
+                color = Color(0xFF0A9AD9),
                 fontWeight = FontWeight.Bold
 
             )
